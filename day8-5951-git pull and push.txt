@@ -1,0 +1,25 @@
+Git pull:
+
+git init foldername
+cd foldername
+git pull repourl
+
+Git push:
+
+mkdir git_push
+cd git_push
+git init
+touch demo.txt
+git add demo.txt
+git commit -m "write something"
+git remote add origin repourl
+git remote -v
+git push origin master
+
+Git clone:
+git clone repo_url_from_github
+cd repo_name
+create project in eclipse and give path :browse and give path
+git add .
+git commit -m message
+git push origin master
