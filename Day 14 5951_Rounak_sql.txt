@@ -1,0 +1,29 @@
+use hr; 
+select * from employees;
+select employee_id,last_name,salary, department_id from employees;
+desc departments;
+select last_name,salary, (salary*12)+100 from employees;
+select last_name,salary, (salary*12)+100 annual_salary from employees;
+select commision_pct 
+select concat(lastname,jobid) from employees;
+select concat(lastname,"work as",jobid) empidwithnane from employees;
+Select lastname,jobid,salary from employees where ((jobid ="sa") OR (jobid="na")) and (salary>5000)
+select employee_id,last_name,hire_date,salary from employees where hire_date='1997-03-19'; 
+select employee_id,last_name,hire_date,salary from employees where DATE_FORMAT(hire_date, '%Y')=1996; 
+select employee_id,last_name,hire_date,salary from employees where DATE_FORMAT(hire_date, '%y')=96; 
+select employee_id,last_name,Date_FORMAT(hire_date,'%W %D %M %Y'),salary from employees where DATE_FORMAT(hire_date, '%Y')=1996;
+
+select last_name,salary from employees where salary <=8000; 
+select last_name,salary from employees where salary =5800; 
+select last_name,salary from employees where salary >=8000; 
+select last_name,salary from employees where salary <> 8000; 
+select last_name,salary from employees where salary between 2500 and 3500; 
+select employee_id, last_name,salary,manager_id from employees; 
+select employee_id, last_name,salary,manager_id from employees where manager_id in (100,101,201); 
+select first_name from employees where first_name like 'S%'; 
+select last_name from employees where last_name like '_o%'; 
+select last_name from employees where last_name like '__u%'; 
+select last_name from employees where last_name like '%o%'; 
+select last_name from employees where last_name like '%op%'; 
+select last_name ,manager_id from employees where manager_id IS NULL;
+find the employees whose salary is >=5000 and job_id which matches 'MAN' pattern 
