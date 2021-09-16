@@ -1,0 +1,56 @@
+Join
+
+Creating first table:
+
+Create table customer(customer_id int, customer_name varchar(), customer address varchar());
+
+Entering value in first table:
+
+INSERT INTO Customer (customer_id, customer_name, customer address)
+VALUES ('1','Rounak','kolkata');
+
+INSERT INTO Customer (customer_id, customer_name, customer address)
+VALUES ('2','Rakesh','delhi');
+
+INSERT INTO Customer (customer_id, customer_name, customer address)
+VALUES ('3','Rajesh','mumbai');
+
+INSERT INTO Customer (customer_id, customer_name, customer address)
+VALUES ('4','Ramesh','mumbai');
+
+Creating second table:
+
+Create table order(order_id int, order_name varchar(), order_rating varchar());
+
+Entering value in first table:
+
+INSERT INTO Customer (order_id, order_name , order_rating )
+VALUES ('1','Phone','A');
+
+INSERT INTO Customer (order_id, order_name , order_rating )
+VALUES ('3','TV','B');
+
+INSERT INTO Customer (order_id, order_name , order_rating )
+VALUES ('4','Car','A');
+
+INSERT INTO Customer (order_id, order_name , order_rating )
+VALUES ('5','Laptop','C');
+
+Inner join
+  
+SELECT customer.customer_name,
+Customer.customer_address, order.order_name 
+FROM customer INNER JOIN order ON customer.customer_id = order.order_id;  
+
+Left Outer join:
+
+SELECT customer.customer_name,
+Customer.customer_address, order.order_name 
+FROM customer LEFT JOIN order ON customer.customer_id = order.order_id;
+
+Right outer join:
+
+SELECT customer.customer_name,
+Customer.customer_address, order.order_name 
+FROM customer RIGHT JOIN order ON customer.customer_id = order.order_id;
+
