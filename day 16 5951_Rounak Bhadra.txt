@@ -1,0 +1,28 @@
+7. we have seen what insert does. Try out and find what upsert does?
+Ans:
+Upsert is a combination of update and insert. Upsert performs two functions:
+1.Update data if there is a matching document.
+2.Insert a new document in case there is no document matches the query criteria.
+
+>db.customer.update({first_name:"hi"},{first_name:"hiii",last_name:"hello",gender:"male"},{upsert:true});
+
+8. what happens when you use'upsert:true' with update statement?
+
+>db.customer.update({first_name:"hi"},{first_name:"hiii",last_name:"hello",gender:"male"},{upsert:true});
+
+
+1.select Regd.No from students where name='Pradeep';
+2.select name,branch from students;
+3.select count(*) from students;
+4.alter table students add column address varchar();
+
+1.create table employee(empno int,ename varchar(),job varchar(),hire_date varchar(),mgr int,sal int,comm int,deptno int);
+2.select ename from employee where deptno=30;
+3.select ename,empno,deptno from employee;
+4.select ename,deptno from employee where deptno>20;
+5.select ename from employee where comm>sal;
+6.select ename from employee where comm>(sal*0.6);
+7.select ename,job,sal from employee where (deptno=20) and (sal>2000);
+8.select ename from employee where (job='salesman') and (deptno=30) and (sal>1500);
+9.select ename from employee where (job='manager') or (job='president');
+10.select ename from employee where job not like 'man%' and (deptid !=30);  
