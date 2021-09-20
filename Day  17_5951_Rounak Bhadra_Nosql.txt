@@ -1,0 +1,28 @@
+use customerdb
+db
+db.createCollection("customer');
+show collections
+db.customer.updateMany({},{$set:{status:"V"}})
+db.customer.updateMany({gender:"male"},{$set:{status:"MV"}});
+{ "acknowledged" : true, "matchedCount" : 4, "modifiedCount" : 4 }
+db.customer.update({gender:"male"},{$set:{status:"MV"}},{multi:true});
+WriteResult({ "nMatched" : 5, "nUpserted" : 0, "nModified" : 1 })
+select * from employees;
+select * from employees where ---> Rounak
+select age form employees where lastname="Rounak"
+db.customer.find().pretty();
+db.customer.find({first_name:"Rounak"}).pretty();
+db.customer.find({},{first_name:1});
+db.customer.find({},{_id:0,first_name:1})
+db.customer.find({},{_id:0,first_name:0,age:0});
+ db.customer.remove({first_name:"Dhoni"});
+db.customer.remove({status:{$eq:"FV"}});
+db.customer.remove({status:"FV"});
+db.customer.find({},{_id:0,first_name:1,last_name:1}).sort({"last_name":1});
+db.customer.find({},{_id:0,first_name:1,last_name:1}).sort({"last_name":-1});
+                 restriction
+db.customer.find({},{}).sort( 1).pretty()
+db.customer.find({age:{$gt:30}}).limit(2).skip(2);
+db.customer.find().count();
+
+ db.customer.find({status:"MV"}).count();
