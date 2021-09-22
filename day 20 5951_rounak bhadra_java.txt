@@ -1,0 +1,385 @@
+package com.company;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        String str1=args[0];
+        String str2=args[1];
+       // str1="hi";
+        //str2="hello";
+        int num1=Integer.parseInt(str1);
+        int num2=Integer.parseInt(str2);
+
+        System.out.println("sum = "+(num1+num2));
+    }
+}
+result:
+sum = 68
+
+Process finished with exit code 0
+
+Bubble sort
+
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        int len=Integer.parseInt(args[0]);
+
+        //declaration of array
+        int[] arr=new int[len];
+        Scanner sc=new Scanner(System.in);
+        for(int i=0;i<arr.length;i++)
+        {
+            arr[i]=sc.nextInt();
+        }
+        for(int i=0;i<(arr.length-1);i++)
+        {
+            for(int j=0;j< (arr.length-i-1);j++)
+            {
+                if(arr[j]>arr[j+1])
+                {
+                    int temp=arr[j];
+                    arr[j]=arr[j+1];
+                    arr[j+1]=temp;
+                }
+            }
+        }
+        for(int i=0;i< arr.length;i++)
+        {
+            System.out.print(arr[i]+" ");
+        }
+
+
+    }
+}
+
+result:
+56
+89
+34
+12
+12 34 56 89 
+Process finished with exit code 0
+
+
+class object :
+
+class creation:
+
+package com.company;
+
+public class Book {
+    int boonId;
+    String bookName;
+    int bookPrice;
+
+    //constructor to construct with initial values
+    public Book(int boonId, String bookName, int bookPrice) {
+        this.boonId = boonId;
+        this.bookName = bookName;
+        this.bookPrice = bookPrice;
+    }
+//print the book object:returning a value
+    @Override
+    public String toString() {
+        return "Book{" +
+                "boonId=" + boonId +
+                ", bookName='" + bookName + '\'' +
+                ", bookPrice=" + bookPrice +
+                '}';
+    }
+}
+
+
+object creation:
+
+public static void main(String[] args) {
+	// write your code here
+        Scanner sc=new Scanner(System.in);
+        System.out.println("enter details of book1");
+        int bookId=sc.nextInt();
+        String bookName=sc.next();
+        int bookPrice= sc.nextInt();
+
+        //every object is created during runtime
+        Book book1=new Book(bookId,bookName,bookPrice);
+        System.out.println(book1);
+        System.out.println("enter details of book 2");
+        int bookId1=sc.nextInt();
+        String bookName1=sc.next();
+        int bookPrice1= sc.nextInt();
+        Book book2=new Book(bookId1,bookName1,bookPrice1);
+
+        // Book book1=new Book(100,"java",300);
+        B//ook book2=new Book(200,"HTML",300);
+        System.out.println(book1);
+        System.out.println(book2);
+    }
+}
+
+
+creating array of objects
+
+ Scanner sc=new Scanner(System.in);
+        System.out.println("enter th number of element in book array");
+        int len=sc.nextInt();
+        Book[] bookarr=new Book[len];
+
+        for(int i=0;i<len;i++)
+        {
+            System.out.println("entering details of "+(i+1));
+            int bookId=sc.nextInt();
+            String bookName=sc.next();
+            int bookPrice=sc.nextInt();
+            bookarr[i]=new Book(bookId,bookName,bookPrice);
+        }
+        System.out.println("to print the book in the bookarr");
+        for(int i=0;i<len;i++)
+        {
+            System.out.println(bookarr[i]);
+        }
+    }
+}
+
+result:
+enter th number of element in book array
+2
+entering details of 1
+100
+java
+300
+entering details of 2
+300
+python
+400
+to print the book in the bookarr
+Book{boonId=100, bookName='java', bookPrice=300}
+Book{boonId=300, bookName='python', bookPrice=400}
+
+Process finished with exit code 0
+
+
+2. encapsulation with access modifier
+
+main class:
+
+package com.company;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        customer c1= new customer(1,"Rounak",2000,5);
+        System.out.println(c1);
+        //System.out.println("bill amount is "+c1.calc_billamt());
+    }
+}
+
+customer class:
+
+package com.company;
+
+public class customer {
+    private int custId;
+    private String custName;
+    private int unitsConsumed;
+    private int unitPrice;
+
+    public customer(int custId, String custName, int unitsConsumed, int unitPrice) {
+        this.custId = custId;
+        this.custName = custName;
+        this.unitsConsumed = unitsConsumed;
+        this.unitPrice = unitPrice;
+    }
+    private int calc_billamt()
+    {
+        return(unitsConsumed*unitPrice);
+    }
+
+    @Override
+    public String toString() {
+        return "customer{" +
+                "custId=" + custId +
+                ", custName='" + custName + '\'' +
+                ", unitsConsumed=" + unitsConsumed +
+                ", unitPrice=" + unitPrice +"Bill amount:"+calc_billamt()+
+                '}';
+    }
+}
+
+result:
+
+customer{custId=1, custName='Rounak', unitsConsumed=2000, unitPrice=5Bill amount:10000}
+
+Process finished with exit code 0
+
+3. student percentage
+
+class:
+
+package com.company;
+
+public class Student {
+    private int std_id;
+    private String name;
+    private int sub1;
+    private int sub2;
+    private int sub3;
+
+    public Student(int std_id, String name, int sub1, int sub2, int sub3) {
+        this.std_id = std_id;
+        this.name = name;
+        this.sub1 = sub1;
+        this.sub2 = sub2;
+        this.sub3 = sub3;
+    }
+    private double calc_per()
+    {
+        return((sub1+sub2+sub3)/3);
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "std_id=" + std_id +
+                ", name='" + name + '\'' +
+                ", sub1=" + sub1 +
+                ", sub2=" + sub2 +
+                ", sub3=" + sub3 +"percentage scored"+calc_per()+
+                '}';
+    }
+}
+
+main:
+package com.company;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        Student s=new Student(2,"Rounak",89,98,85);
+        System.out.println(s);
+        
+    }
+}
+
+result:
+Student{std_id=2, name='Rounak', sub1=89, sub2=98, sub3=85percentage scored90.0}
+
+Process finished with exit code 0
+
+
+student average
+
+main class
+
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        //Student s=new Student(2,"Rounak",89,98,85);
+        //System.out.println(s);
+        Scanner sc=new Scanner(System.in);
+        System.out.println("enter student number");
+        int len=sc.nextInt();
+        Student[] arr=new Student[len];
+        for(int i=0;i<len;i++)
+        {
+            System.out.println("enter "+i+" student id");
+           int std_id=sc.nextInt();
+            System.out.println("enter student name");
+           String name=sc.next();
+            System.out.println("enter first subject number");
+           int sub1=sc.nextInt();
+            System.out.println("enter second subject number");
+           int sub2=sc.nextInt();
+            System.out.println("enter third subject number");
+           int sub3=sc.nextInt();
+           arr[i]=new Student(std_id,name,sub1,sub2,sub3);
+        }
+        for(int i=0;i<len;i++)
+        {
+            System.out.println(arr[i]);
+        }
+        System.out.println();
+
+
+    }
+}
+
+student class:
+
+package com.company;
+
+public class Student {
+    private int std_id;
+    private String name;
+    private int sub1;
+    private int sub2;
+    private int sub3;
+
+    public Student(int std_id, String name, int sub1, int sub2, int sub3) {
+        this.std_id = std_id;
+        this.name = name;
+        this.sub1 = sub1;
+        this.sub2 = sub2;
+        this.sub3 = sub3;
+    }
+    private double calc_per()
+    {
+        return((sub1+sub2+sub3)/3);
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "std_id=" + std_id +
+                ", name='" + name + '\'' +
+                ", sub1=" + sub1 +
+                ", sub2=" + sub2 +
+                ", sub3=" + sub3 +"percentage scored"+calc_per()+
+                '}';
+    }
+}
+
+
+result:
+
+enter student number
+2
+enter 0 student id
+12
+enter student name
+rounak
+enter first subject number
+99
+enter second subject number
+90
+enter third subject number
+99
+enter 1 student id
+45
+enter student name
+suman
+enter first subject number
+78
+enter second subject number
+89
+enter third subject number
+87
+Student{std_id=12, name='rounak', sub1=99, sub2=90, sub3=99percentage scored96.0}
+Student{std_id=45, name='suman', sub1=78, sub2=89, sub3=87percentage scored84.0}
+
+
+Process finished with exit code 0
+
