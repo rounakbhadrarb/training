@@ -1,0 +1,164 @@
+5.palindrone:
+
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        Scanner sc=new Scanner(System.in);
+        int m=sc.nextInt();
+        int rem=0,pal=0,temp;
+        temp=m;
+        while(m!=0)
+        {
+            rem=m%10;
+            pal=(pal*10)+rem;
+            m=m/10;
+        }
+        if(temp==pal)
+        {
+            System.out.println(temp+" is a palindrome. its reverse is "+pal);
+        }
+        else
+            System.out.println(temp+" is not a palindrome. its reverse is "+pal);
+
+    }
+}
+
+
+Output:
+
+345
+345 is not a palindrome. its reverse is 543
+
+Process finished with exit code 0
+
+121
+121 is a palindrome. its reverse is 121
+
+Process finished with exit code 0
+
+6. Krishnamurthy number
+
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        Scanner sc=new Scanner(System.in);
+        int num=sc.nextInt();
+        int rem,sum=0;
+        int temp=num;
+        while(num!=0)
+        {
+            rem=num%10;
+            sum=sum+fact(rem);
+            num=num/10;
+        }
+        if(sum==temp)
+            System.out.println(temp+" is a krishnamurthy number");
+        else
+            System.out.println(temp+" is not a krishnamurthy number");
+    }
+    public static int fact(int fac)
+    {
+        int r=1;
+        for(int i=1;i<=fac;i++)
+        {
+            r=r*i;
+        }
+        return r;
+    }
+}
+
+output:
+
+145
+145 is a krishnamurthy number
+
+Process finished with exit code 0
+
+7. sum of even digit in a number
+
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        Scanner sc=new Scanner(System.in);
+        int num=sc.nextInt();
+        int rem,sum=0;
+        int temp=num;
+        while(num!=0)
+        {
+            rem=num%10;
+            if(rem%2==0)
+                sum+=rem;
+            num=num/10;
+        }
+        System.out.println("sum of even digit in "+temp+" is : "+sum);
+    }
+}
+
+output:
+
+7854563
+sum of even digit in 7854563 is : 18
+
+Process finished with exit code 0
+
+8.check a number is Disarium or not:
+
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        Scanner sc=new Scanner(System.in);
+        int num=sc.nextInt();
+        int rem,sum=0,digit=0;
+        int temp=num;
+        int num1=num;
+        while(num>0)
+        {
+            num=num/10;
+            digit++;
+        }
+       // System.out.println(digit);
+        while(num1>0)
+        {
+            rem=num1%10;
+            sum=sum+ (int)Math.pow(rem,digit);
+            digit--;
+            num1=num1/10;
+
+        }
+        System.out.println(sum);
+        System.out.println(temp);
+        if (sum==temp)
+            System.out.println(temp+" is a Disarium number");
+        else
+            System.out.println(temp+" is not a disarium number");
+    }
+}
+
+output:
+
+175
+175
+175
+175 is a Disarium number
+
+Process finished with exit code 0

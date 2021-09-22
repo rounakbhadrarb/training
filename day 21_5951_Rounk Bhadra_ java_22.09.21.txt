@@ -1,0 +1,292 @@
+Dice Game
+
+main class:
+
+package com.company;
+
+import com.player.Player;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        Player p1=new Player();
+        int p1Score = p1.play();
+        int p1d1Score=p1.getD1Score();
+        int p1d2Score=p1.getD2Score();
+
+        System.out.println("p1 score: "+p1Score);
+        System.out.println("p1 d1 "+p1d1Score+"  "+"p1 d2: "+p1d2Score);
+
+        Player p2= new Player();
+        int p2Score = p2.play();
+        int p2d1Score=p2.getD1Score();
+        int p2d2Score=p2.getD2Score();
+
+        System.out.println("p2 score: "+p2Score);
+        System.out.println("p2 d1 "+p2d1Score+"  "+"p2 d2: "+p2d2Score);
+
+        if(p1Score>p2Score)
+            System.out.println("p1 won the game!!!");
+        else
+            if(p1Score==p2Score)
+                System.out.println("game draw");
+            else
+                System.out.println("p2 won the game!!!!");
+
+
+
+    }
+}
+
+
+Dice Class:
+
+package com.player;
+
+import java.util.Random;
+
+public class Dice {
+    private int fvalue;
+
+    public int roll()
+    {
+        Random rand=new Random();
+        fvalue=((int)rand.nextInt(5)+1);
+        return fvalue;
+    }
+
+    public int getFvalue() {
+        return fvalue;
+    }
+
+}
+
+
+Player Class:
+
+package com.player;
+
+public class Player {
+    Dice d1;
+    Dice d2;
+
+    public Player()
+    {
+        d1=new Dice();
+        d2=new Dice();
+    }
+    public int play()
+    {
+        return(d1.roll()+d2.roll());
+    }
+    public int getD1Score()
+    {
+       return (d1.getFvalue());
+    }
+    public int getD2Score()
+    {
+        return (d2.getFvalue());
+    }
+
+}
+
+
+Output:
+
+p1 score: 6
+p1 d1 3  p1 d2: 3
+p2 score: 10
+p2 d1 5  p2 d2: 5
+p2 won the game!!!!
+
+Process finished with exit code 0
+
+
+polymorphism
+
+main:
+package com.company;
+
+import com.company.circlepack.Circle;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        Circle c1=new Circle();
+        System.out.println(c1);
+
+        Circle c2=new Circle(4.5);
+        System.out.println(c2);
+
+        Circle c3=new Circle("Red");
+        System.out.println(c3);
+
+        Circle c4=new Circle(2.5,"blue");
+        System.out.println(c4);
+
+    }
+}
+
+
+circle class:
+
+package com.company.circlepack;
+
+public class Circle {
+    private double radius;
+    private String colour;
+
+    //non paramatized constructor
+    public Circle() {
+        /*this.radius=3.5;
+        this.colour="blue";*/
+        this(3.5,"blue");
+    }
+
+    public Circle(double radius) {
+        this(radius,"Brown");
+    }
+
+    public Circle(String colour) {
+        this(6.5,colour);
+    }
+
+    //complete paramatized constructor
+
+    public Circle(double radius, String colour) {
+        this.radius = radius;
+        this.colour = colour;
+    }
+
+    @Override
+    public String toString() {
+        return "Circle{" +
+                "radius=" + radius +
+                ", colour='" + colour + '\'' +
+                '}';
+    }
+}
+
+result:
+
+Circle{radius=3.5, colour='blue'}
+Circle{radius=4.5, colour='Brown'}
+Circle{radius=6.5, colour='Red'}
+Circle{radius=2.5, colour='blue'}
+
+Process finished with exit code 0
+
+
+function overloading
+
+package com.company;
+
+import com.company.utilities.Average;
+import com.company.utilities.Summation;
+import com.company.utilities.Tax;
+
+
+import java.sql.SQLOutput;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        /*Summation sob=new Summation();
+        System.out.println(sob.add(4,6));
+        System.out.println(sob.add(10,15.5F,12.0));
+        System.out.println(sob.add("function","overloading"));
+
+
+        Tax tob=new Tax();
+        System.out.println(tob.calc_tax(20000,'c'));
+        System.out.println(tob.calc_tax(20000));*/
+        Average a=new Average();
+        int b=a.avg(2,3,4);
+        System.out.println("avgerage of "+a.numbers+b);
+
+    }
+}
+
+average:
+
+package com.company.utilities;
+
+public class Average {
+    public int avg(int ...numbers)
+    {
+        int sum=0;
+        for(int n:numbers)
+        {
+            sum+=n;
+        }
+        return (sum/numbers.length);
+    }
+}
+
+
+result:
+
+3
+
+Process finished with exit code 0
+
+static varible
+
+package com.spack;
+
+public class Person {
+    private static int count;
+    private int pId;
+    private String pName;
+
+    static{   //block to initialize static var
+        count=0;
+    }
+
+    public Person(int pId, String pName) {
+        this.pId = pId;
+        this.pName = pName;
+        ++count;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "pId=" + pId +
+                ", pName=" + pName +
+                '}';
+    }
+    public static int getCount()
+    {
+        return count;
+    }
+}
+
+
+main class:
+
+package com.company;
+
+import com.spack.Person;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        Person p1=new Person(100,"rounak");
+        Person p2=new Person(200,"suman");
+        System.out.println(p1);
+        System.out.println(p2);
+        System.out.println(Person.getCount());
+    }
+}
+
+output:
+
+Person{pId=100, pName=rounak}
+Person{pId=200, pName=suman}
+2
+
