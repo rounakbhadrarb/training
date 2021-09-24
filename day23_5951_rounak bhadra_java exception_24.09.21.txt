@@ -1,0 +1,364 @@
+when an overridden method is taken and delegated 
+
+downcasting:
+
+
+for(Employee e:emparr)
+{
+
+if(e instanceof Manager)
+{
+Manager m=(Manager) e;
+sout(m.calcNetSal());
+}
+else
+{
+Programmer p=(Programmer)e;
+sout(p.calcNetSal());
+}
+
+}
+
+Exception:
+
+package com.company;
+
+public class Main {
+
+    public static void main(String[] args) {
+        int result=0;
+
+        //ArrayIndexOutOfBoundsException,NumberFormatException,ArithmeticException
+        try {
+            int n1 = Integer.parseInt(args[0]);
+            int n2 = Integer.parseInt(args[1]);
+            result = n1 / n2;   //-----arithmetic operation runtime occur
+        }
+        catch (ArrayIndexOutOfBoundsException e)
+        {
+            System.out.println("Denomitor is zero   "+e.getMessage());
+        }
+        catch(ArithmeticException e)
+        {
+            System.out.println("Denominator is zero"+e.getMessage());
+        }
+        catch(NumberFormatException e)
+        {
+            System.out.println("Invalid format"+e.getMessage());
+        }
+        finally
+        {
+            System.out.println(result);
+            System.out.println("resources has been closed");
+        }
+
+
+        System.out.println("done");
+    }
+}
+
+
+output:
+
+
+
+
+
+Exception 2: Bufferreader 
+
+public static void readInput() {
+    InputStreamReader ir = null;
+    BufferedReader br = null;
+    String str1, str2;
+    // InputStreamReader is pipelined with BufferedReader
+    try {
+        ir = new InputStreamReader(System.in);  // will read one char at a time
+        br = new BufferedReader(ir);  // br will be
+        System.out.println("Read two input values : ");
+        str1 = br.readLine();
+        str2 = br.readLine();
+        int result = Integer.parseInt(str1) / Integer.parseInt(str2);
+        System.out.println(result);
+    } catch (ArithmeticException e) {
+        System.out.println("Denominator is zeo    " + e.getMessage());
+    } catch (NumberFormatException e) {
+        System.out.println("Invalid inputs...    " + e.getMessage());
+    } catch (IOException e) {
+
+        System.out.println("Resource error...." + e.getMessage());
+        // e.printStackTrace();
+    } finally {
+
+        try {
+            ir.close();
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+}
+
+output:
+read two input :
+10
+5
+2
+
+
+
+3. throws method in exception
+
+Throws exception class:
+
+package com.company;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class ThrowsException {
+    public static void readInput() throws IOException, ArithmeticException,NumberFormatException
+    {
+        InputStreamReader ir=new InputStreamReader(System.in);
+        BufferedReader br=new BufferedReader(ir);
+
+        System.out.println("read two input values ");
+
+        String str1=br.readLine();
+        String str2=br.readLine();
+        int result=Integer.parseInt(str1)/Integer.parseInt(str2);
+        System.out.println(result);
+    }
+}
+
+
+main class:
+
+package com.company;
+
+import com.sun.source.tree.TryTree;
+
+import java.io.IOException;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        try{
+            ThrowsException.readInput();
+        }
+        catch(IOException r)
+        {
+            r.printStackTrace();
+
+        }
+        catch (NumberFormatException e)
+        {
+            System.out.println(" exception handled"+e.getMessage()+"   ");
+        }
+        catch (ArithmeticException e)
+        {
+            e.getMessage();
+        }
+
+    }
+}
+
+
+output:
+
+read two input values 
+ty
+5
+ exception handledFor input string: "ty"   
+
+Process finished with exit code 0
+
+4. exception problem with employee leave :
+
+exception class:
+
+package exceptionpack;
+//unchecked exception that is runtime
+public class InsufficientLeaveException extends Exception{
+    private String msg;
+
+    public InsufficientLeaveException(String msg)
+    {
+        this.msg=msg;
+    }
+
+    @Override
+    public String getMessage() {
+        return msg;
+    }
+}
+
+
+employee class:
+
+package emppack;
+
+import exceptionpack.InsufficientLeaveException;
+
+public class Employee {
+    private int emp_id;
+    private int bLeave;
+
+    public Employee(int emp_id, int bLeave) {
+        this.emp_id = emp_id;
+        this.bLeave = bLeave;
+    }
+
+    public String applyLeave(int n) throws InsufficientLeaveException {
+        if(bLeave<n)
+            throw new InsufficientLeaveException("Insufficient leave");
+        else
+            bLeave-=n;
+            return ("Leave sanctioned....!!!!!");
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "emp_id=" + emp_id +
+                ", bLeave=" + bLeave +
+                '}';
+    }
+}
+
+main class:
+
+package com.company;
+
+import emppack.Employee;
+import exceptionpack.InsufficientLeaveException;
+
+
+public class Main {
+
+    public static void main(String[] args) throws InsufficientLeaveException {
+	// write your code here
+        Employee em=new Employee(100,20);
+        try {
+            em.applyLeave(10);
+        } catch (InsufficientLeaveException e) {
+            e.printStackTrace();
+        }
+        System.out.println(em);
+        try
+        {
+            em.applyLeave(20);
+        }
+        catch(InsufficientLeaveException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        System.out.println(em);
+
+    }
+}
+
+
+output:
+
+Employee{emp_id=100, bLeave=10}
+Insufficient leave
+Employee{emp_id=100, bLeave=10}
+
+Process finished with exit code 0
+
+
+
+5.getting driving license problem using exception handling:
+
+exception class:
+
+package exceptionpack;
+
+public class InvalidAgeException extends Exception{
+
+    private String msg;
+
+    public InvalidAgeException(String msg) {
+        this.msg = msg;
+    }
+
+    public String getMessage()
+    {
+        return msg;
+    }
+}
+
+
+Citizen class:
+
+package cpack;
+
+import exceptionpack.InvalidAgeException;
+
+public class Citizen {
+    private int adharNo;
+    private String name;
+    private int age;
+
+    public Citizen(int adharNo, String name, int age) {
+        this.adharNo = adharNo;
+        this.name = name;
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "Citizen{" +
+                "adharNo=" + adharNo +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
+
+    public String getLicense() throws InvalidAgeException {
+        if(age<18)
+            throw new InvalidAgeException("grow up first");
+        else
+            if((age<=75)&&(age>=18)) {
+                return ("congrats...");
+            }
+            else
+                throw new InvalidAgeException("you are too old to ride bike");
+
+    }
+}
+
+
+main class:
+
+package com.company;
+
+import cpack.Citizen;
+import exceptionpack.InvalidAgeException;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        Citizen c=new Citizen(1,"rounak",21);
+        System.out.println(c);
+        try {
+            System.out.println( c.getLicense());
+        } catch (InvalidAgeException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+output:
+
+Citizen{adharNo=1, name='rounak', age=21}
+congrats...
+
+Process finished with exit c
