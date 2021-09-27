@@ -1,0 +1,580 @@
+
+java object class equals method:
+
+MyData class:
+
+
+
+public class MyData {
+	public int dd;
+	public int mm;
+	private int yy;
+	public MyData(int dd, int mm, int yy) {
+		
+		this.dd = dd;
+		this.mm = mm;
+		this.yy = yy;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		
+	    //giving a derive class object to base class ref is called downcasting
+		MyData d= (MyData)obj;//downcasting
+		//return super.equals(obj);
+		if((this.dd==d.dd)&&(this.mm==d.mm)&&(this.yy==d.yy))
+			return true;
+		else
+			return false;
+	}
+	
+	
+	
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		//return super.hashCode();
+		
+		return(dd^mm^yy); //XOR operation taken to give a hashcode using dd,mm,yy as the key
+	}
+
+	@Override
+	public String toString() {
+		return "MyData [dd=" + dd + ", mm=" + mm + ", yy=" + yy + "]";
+	}
+	
+
+}
+
+
+
+main class:
+
+
+public class Main {
+
+	public static void main(String[] args) {
+
+
+		MyData d1=new MyData(27,9,2021);
+		MyData d2=new MyData(27,9,2021);
+		MyData d3=d1;
+		
+		System.out.println("****"+d1.equals(d2));
+		System.out.println("****"+d1.equals(d3));
+		System.out.println(d1==d2);
+		System.out.println(d1==d3);
+		System.out.println(d1.hashCode());
+		System.out.println(d2.hashCode());
+		System.out.println(d3.hashCode());
+
+	}
+
+}
+
+
+output:
+
+
+****true
+****true
+false
+true
+2039
+2039
+2039
+
+
+collectionDemoFirst:
+
+package com.company;
+
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.TreeSet;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+
+        //set<----Hashset
+        Set s1=new HashSet();
+        s1.add(1);
+        s1.add(12.5);
+        s1.add("java");
+        s1.add(null);
+        s1.add(12.3F);
+        System.out.println(s1);//hashset is an unordered structure
+
+        //set<-----Hashset<----LinkedSet
+        Set<String> s2=new HashSet<String>();
+        s2.add("aaa");
+        s2.add("xyz");
+        s2.add("aaa");
+        s2.add("pqr");
+        s2.add("xyz");
+        System.out.println(s2);
+
+        //Linked Hashset= unsorted but ordered according to order of insertion
+        //
+        Set<String> s3=new LinkedHashSet<String>();
+        s3.add("aaa");
+        s3.add("xyz");
+        s3.add("aaa");
+        s3.add("pqr");
+        s3.add("xyz");
+        System.out.println(s3);
+
+        //TreeSet=sorted set according to natural ordering is monitoring
+        Set<String> s4=new TreeSet<String>();
+        s4.add("Rounak");
+        s4.add("varun");
+        s4.add("smriti");
+        s4.add("smriti");
+        s4.add("shivkumar");
+        System.out.println(s4);
+
+
+    }
+}
+
+
+output:
+
+[null, 1, java, 12.5, 12.3]
+[aaa, pqr, xyz]
+[aaa, xyz, pqr]
+[Rounak, shivkumar, smriti, varun]
+
+Process finished with exit code 0
+
+ArrayList in collection:
+=========================
+
+
+package com.company;
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        //dynamic memory is allocated:its a dyanamically growing array
+        //on default size of array is 10
+        //Duplication are allowed
+        List<String> strList=new ArrayList<String>();
+        strList.add("Rounak");
+        strList.add("apple");
+        strList.add("Banana");
+        strList.add("Apple");
+        strList.add("apple");
+        System.out.println(strList);
+
+        strList.add(1,"pineapple");
+        strList.remove("Apple");
+        strList.remove(4);
+        System.out.println(strList);
+
+        ArrayList<String> sublist=new ArrayList<String>();
+        sublist.add("one");
+        sublist.add("two");
+        sublist.add("three");
+        System.out.println(sublist);
+
+        strList.addAll(1,sublist);
+
+        System.out.println(strList);
+
+        for(int i=0;i<strList.size();i++)
+        {
+            System.out.print(strList.get(i)+" ");
+        }
+        System.out.println();
+        for(String s:strList)
+        {
+            System.out.print(s+"   ");
+        }
+        System.out.println();
+        Iterator<String> it=strList.iterator();
+        while(it.hasNext())
+        {
+            System.out.print(it.next().toUpperCase()+"   ");
+        }
+        Scanner sc=new Scanner(System.in);
+        ArrayList<Integer> ilist=new ArrayList<Integer>();
+
+        int n=sc.nextInt();
+
+        for(int i=0;i<n;i++)
+        {
+            int ele=sc.nextInt();
+            ilist.add(ele);
+        }
+        int sum=0;
+        Iterator<Integer> it1=ilist.iterator();
+        while(it1.hasNext())
+        {
+            int ele1=it1.next();
+            System.out.print(ele1+"  ");
+            sum+=ele1;
+        }
+
+
+    }
+}
+
+
+output:
+======
+
+
+[Rounak, apple, Banana, Apple, apple]
+[Rounak, pineapple, apple, Banana]
+[one, two, three]
+[Rounak, one, two, three, pineapple, apple, Banana]
+Rounak one two three pineapple apple Banana 
+Rounak   one   two   three   pineapple   apple   Banana   
+ROUNAK   ONE   TWO   THREE   PINEAPPLE   APPLE   BANANA   
+4
+3
+4
+3
+2
+3  4  3  2  
+Process finished with exit code 0
+
+
+Collection ArrayList LinkedList
+===============================
+
+package com.company;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        //its a doubly linked list. duplications are allowed.
+        //each node holds data and also addess which link the next node
+        //insertion deletion is less expensive compared to arrraylist
+        List<String> l1=new LinkedList<String>();
+        l1.add("orange");
+        l1.add("Apple");
+        l1.add("grapes");
+        System.out.println("is empty"+l1.isEmpty());
+        System.out.println("contains grapes?"+l1.contains("grapes"));
+
+        ListIterator<String> it=l1.listIterator();
+        System.out.println("in forward direction");
+        while(it.hasNext())
+        {
+            System.out.print(it.next()+"  ");
+        }
+
+        System.out.println();
+        System.out.println("printing in backward direction");
+        while(it.hasPrevious())
+        {
+            System.out.print(it.previous()+"   ");
+        }
+        System.out.println();
+        Collections.reverse(l1);
+        System.out.print(l1);
+        Collections.sort(l1);
+        System.out.println(l1);
+        Collections.shuffle(l1);
+        System.out.println(l1);
+
+
+    }
+}
+
+
+Output:
+=======
+
+is emptyfalse
+contains grapes?true
+in forward direction
+orange  Apple  grapes  
+printing in backward direction
+grapes   Apple   orange   
+[grapes, Apple, orange][Apple, grapes, orange]
+
+Process finished with exit code 0
+
+
+
+collection_vector:
+=================
+
+package com.company;
+
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Vector;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        //vector are thread safe, they are synchronized
+        Vector<String> v=new Vector<String>();
+        v.add("Rounak");
+        v.add("is");
+        v.add("feeling");
+        v.add("sleepy");
+        Enumeration<String> e=v.elements();
+
+        while(e.hasMoreElements())
+        {
+            System.out.print(e.nextElement()+"  ");
+        }
+        Iterator<String> it=v.iterator();
+        System.out.println();
+        while(it.hasNext())
+        {
+            System.out.print(it.next()+"  ");
+        }
+
+    }
+}
+
+output:
+
+
+Rounak  is  feeling  sleepy  
+Rounak  is  feeling  sleepy  
+Process finished with exit code 0
+
+
+
+collection_Stack:
+================
+
+package com.company;
+
+import java.util.Stack;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        Stack<String> st=new Stack<String>();
+        st.push("aaa");
+        st.push("bbb");
+        st.push("ccc");
+        System.out.print(st);
+        System.out.println(st.pop()); //remove the element from stack
+        System.out.print(st);
+        System.out.println(st.peek()); //peek does not remove but return the top element
+        System.out.print(st);
+
+        st.add(0,"zzzz");
+        System.out.println(st);
+
+        System.out.println(st.search("zzzz"));
+        System.out.println(st.search("ccc"));
+        System.out.println(st);
+    }
+}
+
+
+output:
+=======
+
+[aaa, bbb, ccc]ccc
+[aaa, bbb]bbb
+[aaa, bbb][zzzz, aaa, bbb]
+3
+-1
+[zzzz, aaa, bbb]
+
+Process finished with exit code 0
+
+
+collection_queue:
+=================
+
+package com.company;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        Queue<String> q=new LinkedList<String>();
+        q.add("java");
+        q.add("python");
+        q.add(".net");
+        q.add("html5");
+
+        System.out.println(q);
+        System.out.println(q.poll()); //removing elements in fifo order
+        System.out.println(q);
+        System.out.println(q.peek()); //dot remove but show elements in fifo order
+        System.out.println(q);
+    }
+}
+
+
+output:
+=======
+
+[java, python, .net, html5]
+java
+[python, .net, html5]
+python
+[python, .net, html5]
+
+Process finished with exit code 0
+
+
+collection_linked Map and linked HashMap and Tree Map and Hash Table:
+=======================================
+
+package com.company;
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+
+        //no duplication allowed. if there it will be overridden.
+
+        Map<Integer,String> hm=new HashMap<Integer,String>();
+
+        hm.put(100,"books");
+        hm.put(200,"paper");
+        hm.put(100,"pens");
+        hm.put(null,null);
+        hm.put(350,null);
+        hm.put(250,null);
+        System.out.println(hm);
+
+//linked hashmap follows order of insertion
+        Map<Integer,String> lhm=new LinkedHashMap<Integer,String>();
+        lhm.put(100,"books");
+        lhm.put(200,"paper");
+        lhm.put(100,"pens");
+        lhm.put(null,null);
+        lhm.put(350,null);
+        lhm.put(250,null);
+        System.out.println(lhm);
+
+        //trree map is a sorted maps. it will sort objects on key in natural order followed
+        Map<Integer,String> thm=new TreeMap<Integer,String>();
+        thm.put(100,"books");
+        thm.put(200,"paper");
+        thm.put(100,"pens");
+        thm.put(120,null);
+        thm.put(350,null);
+        thm.put(250,null);
+        System.out.println(thm);
+
+        //HashTable does not allow null at all
+        //thread safe
+        //same as hashmap
+        Map<Integer,String> ht=new Hashtable<Integer,String>();
+        ht.put(100,"books");
+        ht.put(200,"paper");
+        ht.put(100,"pens");
+        ht.put(120,"bye");
+        ht.put(350,"hello");
+        ht.put(250,"hi");
+        System.out.println(ht);
+
+
+
+    }
+}
+
+
+output:
+=======
+{null=null, 100=pens, 200=paper, 250=null, 350=null}
+{100=pens, 200=paper, null=null, 350=null, 250=null}
+{100=pens, 120=null, 200=paper, 250=null, 350=null}
+{120=bye, 350=hello, 250=hi, 200=paper, 100=pens}
+
+Process finished with exit code 0
+
+
+collection_project_stockprice:
+=============================
+
+package com.company;
+
+import com.custpack.Customer;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Main {
+
+    public static void main(String[] args) {
+        /*Map<String,Integer> hm=new HashMap<String,Integer>();
+        hm.put("sofa",5000);
+        hm.put("table",3000);
+        hm.put("lamp",2000);
+        hm.put("lampshade",3000);
+
+        System.out.println(hm.keySet());
+        System.out.println(hm.values());
+        System.out.println(hm.entrySet());
+
+        //how to iterate the map
+        for(String key:hm.keySet())
+        {
+            System.out.println(key+"   "+hm.get(key));
+        }
+
+        int totamt=0;
+        for(String key: hm.keySet())
+        {
+            totamt+=hm.get(key);
+        }
+        System.out.println("Total investment is :"+totamt);
+*/
+
+        HashMap<Customer,Integer> custmap=new HashMap<Customer,Integer>();
+        custmap.put(new Customer(10,"Rounak"),10000);
+        custmap.put(new Customer(20,"HI"),6000);
+        custmap.put(new Customer(30,"hello"),5000);
+        int totsalesamt=0;
+        for(Customer cust: custmap.keySet())
+        {
+            totsalesamt+=custmap.get(cust);
+        }
+        System.out.println("total sales amount : "+totsalesamt);
+        for (Customer cust: custmap.keySet())
+        {
+            System.out.println(cust+"  "+custmap.get(cust));
+        }
+
+
+    }
+}
+
+
+output:
+
+total sales amount : 21000
+Customer{id=20, name='HI'}  6000
+Customer{id=30, name='hello'}  5000
+Customer{id=10, name='Rounak'}  10000
+
+Process finished with exit code 0
