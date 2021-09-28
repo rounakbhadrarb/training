@@ -1,0 +1,903 @@
+comareTo method:
+===============
+
+Student class:
+==============
+package StudentPack;
+
+public class Student implements Comparable<Student> {
+    private int id;
+    private String name;
+    private int marks;
+
+    public Student(int id, String name, int marks) {
+        this.id = id;
+        this.name = name;
+        this.marks = marks;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", marks=" + marks +
+                '}';
+    }
+
+    //s1.compareTo(s2)
+   /* @Override
+    public int compareTo(Student s) {
+        //in ascending order
+        if(marks>s.marks)
+            return 1;
+        else
+            if(marks==s.marks)
+                return 0;
+            else
+                return -1;
+    }*/
+    @Override
+    public int compareTo(Student s) {
+        //in descending order
+        if(marks>s.marks)
+            return -1;
+        else
+        if(marks==s.marks)
+            return 0;
+        else
+            return 1;
+    }
+
+}
+
+
+main.class:
+===========
+
+
+package com.company;
+
+import StudentPack.Student;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        ArrayList<Student> slist=new ArrayList<Student>();
+        slist.add(new Student(10,"rounak",85));
+        slist.add(new Student(20,"suman",75));
+        slist.add(new Student(30,"hi",80));
+        slist.add(new Student(40,"hello",82));
+        slist.add(new Student(50,"bye",77));
+        System.out.println("printing before sorting");
+        System.out.println(slist);
+        Collections.sort(slist);
+        System.out.println("after sorting");
+        for(Student s:slist)
+        {
+            System.out.println(s);
+        }
+    }
+}
+
+
+
+Output:
+=========
+
+printing before sorting
+[Student{id=10, name='rounak', marks=85}, Student{id=20, name='suman', marks=75}, Student{id=30, name='hi', marks=80}, Student{id=40, name='hello', marks=82}, Student{id=50, name='bye', marks=77}]
+after sorting
+Student{id=10, name='rounak', marks=85}
+Student{id=40, name='hello', marks=82}
+Student{id=30, name='hi', marks=80}
+Student{id=50, name='bye', marks=77}
+Student{id=20, name='suman', marks=75}
+
+Process finished with exit code 0
+
+
+
+
+2.comparator example:
+=====================
+
+person class:
+=============
+
+package ppack;
+
+public class Person{
+    private int id;
+    private String name;
+    private int age;
+
+    public Person(int id, String name, int age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
+
+}
+
+AgeComparator.class:
+===================
+
+package ComparatorPack;
+
+import ppack.Person;
+
+import java.util.Comparator;
+
+public class AgeComparator implements Comparator<Person> {
+    @Override
+    public int compare(Person p1, Person p2) {
+        if(p1.getAge()>p2.getAge())
+            return 1;
+        else
+            if (p1.getAge()==p2.getAge())
+                return 0;
+            else
+                return -1;
+    }
+}
+
+
+Namecomparator.class:
+=====================
+
+package ComparatorPack;
+
+import ppack.Person;
+
+import java.util.Comparator;
+
+public class NameComparator implements Comparator<Person> {
+
+    @Override
+    public int compare(Person p1, Person p2) {
+        return(p1.getName().compareTo(p2.getName()));
+    }
+}
+
+
+main.class:
+==========
+
+package com.company;
+
+import ComparatorPack.AgeComparator;
+import ComparatorPack.NameComparator;
+import ppack.Person;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        ArrayList<Person> p=new ArrayList<Person>();
+        p.add(new Person(10,"Rounak",21));
+        p.add(new Person(20,"Rivu",25));
+        p.add(new Person(30,"Suman",30));
+        p.add(new Person(40,"hi",34));
+        p.add(new Person(50,"hello",18));
+        System.out.println("printing before sorting");
+        System.out.println(p);
+        System.out.println("printing after sorting");
+        Collections.sort(p,new AgeComparator());
+        for(Person pi:p)
+        {
+            System.out.println(pi);
+        }
+        System.out.println();
+        Collections.sort(p,new NameComparator());
+        for(Person pi:p)
+        {
+            System.out.println(pi);
+        }
+
+    }
+}
+
+
+output:
+=======
+
+printing before sorting
+[Person{id=10, name='Rounak', age=21}, Person{id=20, name='Rivu', age=25}, Person{id=30, name='Suman', age=30}, Person{id=40, name='hi', age=34}, Person{id=50, name='hello', age=18}]
+printing after sorting
+Person{id=50, name='hello', age=18}
+Person{id=10, name='Rounak', age=21}
+Person{id=20, name='Rivu', age=25}
+Person{id=30, name='Suman', age=30}
+Person{id=40, name='hi', age=34}
+
+Person{id=20, name='Rivu', age=25}
+Person{id=10, name='Rounak', age=21}
+Person{id=30, name='Suman', age=30}
+Person{id=50, name='hello', age=18}
+Person{id=40, name='hi', age=34}
+
+Process finished with exit code 0
+
+
+4.collection_priority_queue:
+============================
+
+package ipack;
+
+public class Item implements Comparable<Item>{
+    private int id;
+    private String name;
+
+    public Item(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    @Override
+    public int compareTo(Item i) {
+        if(id>i.id)
+            return 1;
+        else
+            if(id==i.id)
+                return 0;
+            else
+                return -1;
+    }
+}
+
+
+main.java:
+==========
+
+package com.company;
+
+import ipack.Item;
+
+import java.util.PriorityQueue;
+import java.util.Queue;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        Queue<Item> pq=new PriorityQueue<Item>();
+        pq.add(new Item(40,"java"));
+        pq.add(new Item(50,"python"));
+        pq.add(new Item(30,"c"));
+        pq.add(new Item(10,"c++"));
+        pq.add(new Item(20,"Angular"));
+
+        for(Item i:pq)
+        {
+            System.out.println(i);
+        }
+        System.out.println(pq.poll());
+        System.out.println("after polling***************");
+        for(Item i:pq)
+        {
+            System.out.println(i);
+        }
+        System.out.println(pq.poll());
+        System.out.println("after polling***************");
+        for(Item i:pq)
+        {
+            System.out.println(i);
+        }
+        System.out.println(pq.poll());
+        System.out.println("after polling***************");
+        for(Item i:pq)
+        {
+            System.out.println(i);
+        }
+
+    }
+}
+
+
+output:
+=========
+
+Item{id=10, name='c++'}
+Item{id=20, name='Angular'}
+Item{id=40, name='java'}
+Item{id=50, name='python'}
+Item{id=30, name='c'}
+Item{id=10, name='c++'}
+after polling***************
+Item{id=20, name='Angular'}
+Item{id=30, name='c'}
+Item{id=40, name='java'}
+Item{id=50, name='python'}
+Item{id=20, name='Angular'}
+after polling***************
+Item{id=30, name='c'}
+Item{id=50, name='python'}
+Item{id=40, name='java'}
+Item{id=30, name='c'}
+after polling***************
+Item{id=40, name='java'}
+Item{id=50, name='python'}
+
+Process finished with exit code 0
+
+
+5.Generic class demo:
+===================
+
+test.class:
+
+package gpack;
+//in generic classes
+public class Test <T,U>{
+    private T ob1;
+    private U ob2;
+
+    public Test(T ob1, U ob2) {
+        this.ob1 = ob1;
+        this.ob2 = ob2;
+    }
+
+    public T getOb1() {
+        return ob1;
+    }
+
+    public U getOb2() {
+        return ob2;
+    }
+
+    @Override
+    public String toString() {
+        return "Test{" +
+                "ob1=" + ob1 +
+                ", ob2=" + ob2 +
+                '}';
+    }
+}
+
+
+generic.class:
+==============
+
+package gpack;
+
+public class Product {
+    private int pId;
+    private String pName;
+
+    public Product(int pId,String pName) {
+        this.pId = pId;
+        this.pName=pName;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "pId=" + pId +
+                ", pName=" + pName +
+                '}';
+    }
+}
+
+
+main.class:
+==========
+
+package com.company;
+
+import gpack.Product;
+import gpack.Test;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        Test<String,String> tob=new Test<String,String>("Hello","world");
+        System.out.println(tob);
+        Test<Integer,String> tob1=new Test<Integer,String>(100,"Rounak");
+        System.out.println(tob1);
+
+        Test<Integer, Product> tob2=new Test<Integer,Product>(100,new Product(200,"Rounak"));
+        System.out.println(tob2);
+    }
+}
+
+
+output:
+==========
+
+Test{ob1=Hello, ob2=world}
+Test{ob1=100, ob2=Rounak}
+Test{ob1=100, ob2=Product{pId=200, pName=Rounak}}
+
+Process finished with exit code 0
+
+
+6.generic function demo:
+=========================
+
+Test.java:
+==========
+
+package com.company;
+
+public class Test {
+    public static <T> void printArray(T[] arr)
+    {
+        for(T ele:arr)
+        {
+            System.out.print(ele+" ");
+        }
+    }
+}
+
+
+main.class:
+===========
+
+
+package com.company;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        Integer[] intarr={2,6,8,0};
+        Test.printArray(intarr);
+
+        System.out.println();
+        String[] sarr={"Rounak","hi","hello"};
+        Test.printArray(sarr);
+    }
+}
+
+
+output:
+==========
+
+
+2 6 8 0 
+Rounak hi hello 
+Process finished with exit code 0
+
+
+
+7. generic function with bound:
+==================================
+
+Test.class:
+==========
+
+
+package com.company;
+
+import java.util.List;
+
+public class Test {
+    //upperbound using extends
+    public static Number sumOfList(List<? extends Number> nlist)
+    {
+        double s=0.0;
+        for(Number n:nlist)
+        {
+            s+=n.doubleValue();
+        }
+        return s;
+    }
+
+    //lower bound using super
+    public static  Number sumOfList1(List<? super Double>llist)
+    {
+        double s=0.0;
+        for(Object n:llist)
+        {
+            s+=((Number)n).doubleValue();
+        }
+        return s;
+    }
+
+//no bound or unbound
+    public static Number sumOfList2(List<?> list)
+    {
+        double s=0.0;
+        for(Object n:list)
+        {
+            s+=((Number)n).doubleValue();
+        }
+        return s;
+    }
+}
+
+
+main.class:
+===========
+
+package com.company;
+
+import java.util.ArrayList;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        ArrayList<Integer> ilist=new ArrayList<Integer>();
+        ilist.add(10);
+        ilist.add(30);
+        ilist.add(60);
+        ilist.add(35);
+        System.out.println(Test.sumOfList(ilist));
+
+        ArrayList<Object> ar=new ArrayList<Object>();
+        ar.add(10);
+        ar.add(10);
+        ar.add(10);
+        ar.add(10);
+        System.out.println(Test.sumOfList1(ar));
+
+        ArrayList<Integer> ar1=new ArrayList<Integer>();
+        ar1.add(20);
+        ar1.add(20);
+        ar1.add(20);
+        ar1.add(20);
+        System.out.println(Test.sumOfList2(ar1));
+
+    }
+}
+
+
+output:
+=======
+
+
+135.0
+40.0
+80.0
+
+Process finished with exit code 0
+
+
+8. jUnit is a framework for unit test(testing tool) and maven is a building tool:
+
+
+junit first demo:
+===================
+
+
+evenodd checking class:
+=======================
+public class EvenOddClass {
+    public boolean isEvenNumber(int number)
+    {
+        if(number%2==0)
+            return true;
+        else
+            return false;
+    }
+}
+
+Test class:
+=============
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+public class EvenTest {
+    @Test
+    public void test()
+    {
+        EvenOddClass ob=new EvenOddClass();
+        assertEquals(true,ob.isEvenNumber(12));
+    }
+    @Test
+    public void test2()
+    {
+        EvenOddClass ob=new EvenOddClass();
+        assertEquals(false,ob.isEvenNumber(9));
+    }
+
+}
+
+
+output:
+=========
+
+test passed
+
+
+
+
+2. second junit demo with assert:
+====================================
+
+
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+public class TestClass {
+
+    @Test
+    public void test()
+    {
+        int val1=5;
+        int val2=6;
+        assertTrue(val1<val2);
+        assertFalse(val1>val2);
+
+        String str1="abc";
+        String str2="abc";
+
+        //check if both the references are the same
+
+        assertSame(str1,str2);
+
+        String[] earray={"one","two","three"};
+        String[] rarray={"one","two","three"};
+
+        assertArrayEquals(earray,rarray);
+
+        assertEquals(str1,str2);
+    }
+
+}
+
+
+
+output:
+=========
+test passed
+
+
+9.Junit demo3 using testsuit:
+
+messsageutil class:
+===================
+
+public class MessageUtil {
+    private String message;
+
+    public MessageUtil(String message) {
+        this.message = message;
+    }
+
+    //print the message
+
+    public String printMessage()
+    {
+        System.out.println(message);
+        return(message);
+    }
+
+    public String salutationMessage()
+    {
+        message="Hello!!"+message;
+        System.out.println(message);
+        return message;
+
+    }
+}
+
+
+Test1.class:
+=============
+
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+public class Test1 {
+
+    String message="Robert";
+
+    MessageUtil mob=new MessageUtil(message);
+
+    @Test
+    public void Test()
+    {
+        System.out.println("inside test1 testing printmessage method");
+        assertEquals(message,mob.printMessage());
+    }
+}
+
+
+Test2.class:
+============
+
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+public class Test2 {
+    String message="Robert";
+
+    MessageUtil mob=new MessageUtil(message);
+
+    @Test
+    public void Test()
+    {
+        System.out.println("inside test1 testing print message method");
+        message="Hello!!"+message;
+        assertEquals(message,mob.salutationMessage());
+    }
+}
+
+
+TestSuit class:
+===============
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({Test1.class,Test2.class})
+
+
+
+public class TestSuit {
+
+}
+
+
+Output:
+========
+
+inside test1 testing printmessage method
+Robert
+inside test1 testing print message method
+Hello!!Robert
+
+Process finished with exit code 0
+
+
+both test passed....
+
+
+
+9. FILE HANDLING BY JAVA.  DEMO1
+
+package com.company;
+
+import java.io.File;
+import java.io.IOException;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        File file1=new File("C:\\Users\\user124\\Desktop\\demo.txt");
+        try
+        {
+            file1.createNewFile();
+            System.out.println("file created successfully");
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+        File file2=new File("C:\\Users\\user124\\Desktop","Demo2.txt");
+        try
+        {
+            file2.createNewFile();
+            System.out.println("Demo2 file created successfully");
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+        System.out.println(file2.getAbsolutePath());
+        System.out.println(file2.getName());
+        System.out.println(file2.getParent());
+
+        File dir=new File("C:\\Users\\user124\\Desktop");
+        File[] filelist=dir.listFiles();
+        for (File f:filelist)
+        {
+            if ((f.isFile()))
+                System.out.print(f.getName()+" ");
+        }
+
+    }
+}
+
+
+OUTPUT:
+========
+file created successfully
+Demo2 file created successfully
+C:\Users\user124\Desktop\Demo2.txt
+Demo2.txt
+C:\Users\user124\Desktop
+assignment 1 Rounak Bhadra.sql demo.txt Demo2.txt desktop.ini hr-schema-mysql-master.zip mongo db.txt MongoDBCompass.lnk MySQL Workbench 8.0 CE.lnk New Text Document.txt token github.txt 
+Process finished with exit code 0
+
+
+
+10. Reading a file
+====================
+
+package com.company;
+
+import java.io.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        // write your code here
+        File f1 = new File("C:\\Users\\user124\\Desktop\\demo.txt");
+        try (FileReader fr = new FileReader(f1);
+             BufferedReader br = new BufferedReader(fr);)
+        {
+            String str;
+            while((str=br.readLine())!=null)
+            {
+                System.out.println(str);
+                //str=br.readLine();
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+Output:
+========
+
+ROUNAK
+HI 
+HELLO
+BYE
+
+Process finished with exit code 0
+
+
