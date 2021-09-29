@@ -1,0 +1,618 @@
+Lombok class to import all the method easily:
+============================================
+
+1.lombok class demo project:
+============================
+dependecy lombok
+
+customer class:
+=================
+
+import lombok.*;
+
+@Getter
+@AllArgsConstructor
+@Setter
+@ToString
+@NoArgsConstructor
+public class Customer {
+    private int custId;
+    private String custName;
+    private int balance;
+
+
+
+}
+
+
+Person class:
+=============
+
+import lombok.Data;
+@Data
+public class Person {
+    private int pId;
+    private String name;
+}
+
+
+main class:
+=============
+public class Main {
+    public static void main(String[] args)
+    {
+        Customer cust1=new Customer(100,"Rounak",999999999);
+        System.out.println(cust1);
+
+        Customer cust2=new Customer();
+        cust2.setCustId(200);
+        cust2.setCustName("rivu");
+        cust2.setBalance(99999999);
+        System.out.println(cust2.getCustName()+"     "+cust2.getBalance());
+
+        Person p=new Person();
+        p.setName("Hi");
+        p.setPId(45);
+        System.out.println(p.getName()+" "+p.getPId());
+
+    }
+}
+
+output:
+==========
+
+Customer(custId=100, custName=Rounak, balance=999999999)
+rivu     99999999
+Hi 45
+
+Process finished with exit code 0
+
+
+
+2. file project:
+===================
+
+read a file and write to another file:
+=====================================
+
+package com.company;
+
+import java.io.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        File file1=new File("C:\\Users\\user124\\Desktop\\demo.txt");
+        File file2=new File("C:\\Users\\user124\\Desktop\\demo2.txt");
+        try (FileReader fr = new FileReader(file1);
+             BufferedReader br = new BufferedReader(fr);
+             FileWriter fw = new FileWriter(file2,true);
+             BufferedWriter bw = new BufferedWriter(fw);)
+        {
+            String str;
+            while((str=br.readLine())!=null)
+            {
+                System.out.println(str);
+                bw.write(str);
+                bw.newLine();
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+
+
+    }
+}
+
+
+output:
+===========
+ROUNAK
+HI 
+HELLO
+BYE
+
+
+ROUNAK
+HI 
+HELLO
+BYE
+ROUNAK
+HI 
+HELLO
+BYE
+
+Process finished with exit code 0
+
+
+
+4.Reading and writting byte by byte:
+===================================
+
+package com.company;
+
+import java.io.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        File file1=new File("C:\\Users\\user124\\Desktop\\demo.txt"); //source file
+        File file2=new File("C:\\Users\\user124\\Desktop\\demo3.txt"); //destination file
+
+        try(FileInputStream input=new FileInputStream(file1);
+            BufferedInputStream bis=new BufferedInputStream(input);
+            FileOutputStream output=new FileOutputStream(file2);
+            BufferedOutputStream bos=new BufferedOutputStream(output);)
+        {
+            int c;
+            while((c=bis.read())!=-1)
+            {
+                bos.write(c);
+                System.out.print((char)c);
+            }
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+}
+
+
+output:
+===========
+ROUNAK
+HI 
+HELLO
+BYE
+
+Process finished with exit code 0
+
+
+5.Reading and writting byte array:
+================================
+
+package com.company;
+
+import java.io.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        File file1=new File("C:\\Users\\user124\\Desktop\\demo.txt"); //source file
+        File file2=new File("C:\\Users\\user124\\Desktop\\bytearray.txt"); //destination file
+
+        try(FileInputStream input=new FileInputStream(file1);
+            BufferedInputStream bis=new BufferedInputStream(input);
+            FileOutputStream output=new FileOutputStream(file2);
+            BufferedOutputStream bos=new BufferedOutputStream(output);)
+        {
+            byte[] buffer=new byte[input.available()];
+            bis.read(buffer);
+            bos.write(buffer);
+            for(byte b:buffer)
+            {
+                System.out.print((char)b);
+            }
+        } catch (FileNotFoundException fileNotFoundException) {
+            fileNotFoundException.printStackTrace();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+    }
+
+
+output:
+=======
+
+ROUNAK
+HI 
+HELLO
+BYE
+
+Process finished with exit code 0
+
+8. File read and write object demo:
+===================================
+
+student class:
+==============
+
+package com.company;
+
+//if the class object are going for permanent persistent we need to serialize this class
+//this concept is called serialization. which means kindly save the orders of member variables while storing retriving from it
+
+import java.io.Serializable;
+//serializable interface has no methods which is called marker interface
+
+public class Student implements Serializable {
+    private int id;
+    private String name;
+    private int marks;
+
+    public Student(int id, String name, int marks) {
+        this.id = id;
+        this.name = name;
+        this.marks = marks;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", marks=" + marks +
+                '}';
+    }
+}
+
+
+main class:
+=============
+
+package com.company;
+
+import java.io.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        File file1=new File("C:\\Users\\user124\\Desktop\\student.dat"); //destination file
+
+        try(//FileInputStream input=new FileInputStream(file1);
+            FileOutputStream output=new FileOutputStream(file1);
+            ObjectOutputStream out=new ObjectOutputStream(output);
+
+            FileInputStream input=new FileInputStream(file1);
+            ObjectInputStream in=new ObjectInputStream(input);
+            )
+        {
+            Student std=new Student(100,"Rounak",95);
+            Student std1=new Student(200,"Rivu",100);
+            //eriting serialized object
+            out.writeObject(std);
+            out.writeObject(std1);
+            System.out.println("student details has been written");
+
+            //Deserialization
+            // No new objects will be created: No constructor will work
+            //the size of the file(size for all the object) is got using available()
+            //the file input stream object will get you the total size of the file
+
+            while(input.available()>0)
+            {
+                Student student=(Student) in.readObject();
+                System.out.println(student);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+}
+
+
+output:
+===========
+
+student details has been written
+Student{id=100, name='Rounak', marks=95}
+Student{id=200, name='Rivu', marks=100}
+
+Process finished with exit code 0
+
+
+JDBC HOW TO CONNECT JAVA WITH MYSQL:
+=====================================
+
+1.LOAD THE DRIVER
+2.GET CONNECTION
+  a. WE NEED TO CREATE A CONNECTION OBJECT==ITS IN JAVA.SQL
+  b. DriverManager.getConnection(p1,p2,p3)
+   p1= URL
+   p2=username,root
+   p3=password
+3. Creae a statement 
+
+
+public static void main(String[] args) throws ClassNotFoundException, SQLException {
+        // Load the driver
+        //Class.forName("com.mysql.jdbc.Driver");
+        //Establish connection with database using drivers
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookdatabase","root","Serengeti2948$$");
+        // create a statement object
+        Statement st = con.createStatement();
+        // execute the query
+        ResultSet rs = st.executeQuery("select * from book");
+        // extract the rows form the rs -----> ResultSet object
+        while (rs.next())
+        {
+            System.out.println(rs.getInt(1)+"    "+rs.getString(2)+"   "+rs.getInt(3));
+        }
+        // close the connection
+        con.close();
+
+    }
+}
+
+
+
+
+
+10.Book project:
+==================
+
+
+Book class:
+==========
+
+package Model;
+
+public class Book {
+    private int bookId;
+    private String bookName;
+    private int bookPrice;
+
+    public Book(int bookId, String bookName, int bookPrice) {
+        this.bookId = bookId;
+        this.bookName = bookName;
+        this.bookPrice = bookPrice;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public int getBookPrice() {
+        return bookPrice;
+    }
+
+    public void setBookPrice(int bookPrice) {
+        this.bookPrice = bookPrice;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "book_id=" + bookId +
+                ", bookName='" + bookName + '\'' +
+                ", bookPrice=" + bookPrice +
+                '}';
+    }
+}
+
+
+BookOperation interface:
+========================
+
+package bookOperation.pack;
+
+import Model.Book;
+
+import java.util.ArrayList;
+
+public interface BookOperations {
+    String addABook(Book book);
+    ArrayList<Book> getAllBooks();
+    Book getABook(int bookId);
+    String setBookPrice(int bookId,int upPrice);
+}
+
+
+BookOperationImplimentations class:
+===================================
+
+package bookOperation.pack;
+
+import Model.Book;
+
+import java.util.ArrayList;
+
+public class BookOperationImpl implements BookOperations {
+    private ArrayList<Book> blist=new ArrayList<Book>();
+
+    @Override
+    public String addABook(Book book) {
+        blist.add(book);
+        return "book added successfully";
+    }
+
+    @Override
+    public ArrayList<Book> getAllBooks() {
+        return blist;
+    }
+
+    @Override
+    public Book getABook(int bookId) {
+        for(Book book:blist)
+        {
+            if(book.getBookId()==bookId)
+                return book;
+        }
+        return null;
+    }
+
+    @Override
+    public String setBookPrice(int bookId, int upPrice) {
+        Book book=getABook(bookId);
+        book.setBookPrice(upPrice);
+        return "Book price updated successfully";
+    }
+}
+
+
+BookMain Operation class:
+==========================
+
+package mainUIpack;
+
+import Model.Book;
+import bookOperation.pack.BookOperationImpl;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class BookStoreMain {
+    public static void main(String[] args)
+    {
+        Scanner sc=new Scanner(System.in);
+        BookOperationImpl boi=new BookOperationImpl();
+        while(true)
+        {
+            System.out.println("1.add the book");
+            System.out.println("2.list all the books");
+            System.out.println("3.get a book");
+            System.out.println("4.update a book price");
+            System.out.println("5.exit");
+
+            System.out.println("enter ur choice");
+            int choice=sc.nextInt();
+            switch(choice)
+            {
+                case 1:
+                {
+                    System.out.println("enter the details of the book");
+                    int bookId=sc.nextInt();
+                    String bookName=sc.next();
+                    int bookPrice=sc.nextInt();
+                    Book book=new Book(bookId,bookName,bookPrice);
+
+                    System.out.println(boi.addABook(book));
+                    break;
+                }
+                case 2:
+                {
+                    ArrayList<Book> blist=boi.getAllBooks();
+                    for(Book book:blist)
+                    {
+                        System.out.println(book);
+                    }
+
+                    break;
+                }
+                case 3:
+                {
+                    System.out.println("enter the book id to be searched");
+                    int bookId=sc.nextInt();
+                    Book book =boi.getABook(bookId);
+                    if(book!=null)
+                    {
+                        System.out.println(book);
+                    }
+                    else
+                    {
+                        System.out.println("book doesn't found in the store");
+                    }
+                    break;
+
+                }
+                case 4:
+                {
+                    System.out.println("enter the bookId");
+                    int bookId=sc.nextInt();
+                    System.out.println("enter the updated price of the book");
+                    int upPrice=sc.nextInt();
+                    System.out.println(boi.setBookPrice(bookId,upPrice));
+                    System.out.println("updated book list is ");
+                   ArrayList<Book> blist=boi.getAllBooks();
+                   for(Book b:blist)
+                   {
+                       System.out.println(b);
+                   }
+                    break;
+                }
+                default:
+                    sc.close();
+                    System.out.println("bye bye!!!");
+                    System.exit(0);
+
+            }
+        }
+    }
+}
+
+
+
+output:
+=========
+
+1.add the book
+2.list all the books
+3.get a book
+4.update a book price
+5.exit
+enter ur choice
+1
+enter the details of the book
+100
+java
+200
+book added successfully
+1.add the book
+2.list all the books
+3.get a book
+4.update a book price
+5.exit
+enter ur choice
+2
+Book{book_id=100, bookName='java', bookPrice=200}
+1.add the book
+2.list all the books
+3.get a book
+4.update a book price
+5.exit
+enter ur choice
+3
+enter the book id to be searched
+100
+Book{book_id=100, bookName='java', bookPrice=200}
+1.add the book
+2.list all the books
+3.get a book
+4.update a book price
+5.exit
+enter ur choice
+4
+enter the bookId
+100
+enter the updated price of the book
+500
+Book price updated successfully
+updated book list is 
+Book{book_id=100, bookName='java', bookPrice=500}
+1.add the book
+2.list all the books
+3.get a book
+4.update a book price
+5.exit
+enter ur choice
+5
+bye bye!!!
+
+Process finished with exit code 0
