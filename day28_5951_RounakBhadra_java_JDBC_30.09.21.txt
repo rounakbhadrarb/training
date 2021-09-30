@@ -1,0 +1,962 @@
+java jdbc connecting to the mysql database:
+============================================
+
+package Model;
+
+public class Book {
+    private int bookId;
+    private String bookName;
+    private int bookPrice;
+
+    public Book(int bookId, String bookName, int bookPrice) {
+        this.bookId = bookId;
+        this.bookName = bookName;
+        this.bookPrice = bookPrice;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public int getBookPrice() {
+        return bookPrice;
+    }
+
+    public void setBookPrice(int bookPrice) {
+        this.bookPrice = bookPrice;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "book_id=" + bookId +
+                ", bookName='" + bookName + '\'' +
+                ", bookPrice=" + bookPrice +
+                '}';
+    }
+}
+
+
+
+BookOperations interface
+=========================
+
+package BookOpPack;
+
+import Model.Book;
+
+import java.util.ArrayList;
+
+public interface BookOperations {
+    String addABook(Book book);
+    ArrayList<Book> getAllBooks();
+    Book getABook(int bookId);
+    String setBookPrice(int bookId,int upPrice);
+}
+
+
+BookOperationws class:
+======================
+
+package BookOpPack;
+
+import Model.Book;
+
+import javax.swing.plaf.nimbus.State;
+import java.sql.*;
+import java.util.ArrayList;
+
+public class BookOperationImpl implements BookOperations {
+    public static Connection con=null;
+
+    @Override
+    public String addABook(Book book) {
+        /*blist.add(book);
+        return "book added successfully";*/
+        PreparedStatement ps=null;
+        con=DBManager.getConnection();
+        String str="insert into book values (?,?,?)";
+        try
+        {
+            ps=con.prepareStatement(str);
+            ps.setInt(1,book.getBookId());
+            ps.setString(2,book.getBookName());
+            ps.setInt(3,book.getBookPrice());
+            ps.executeUpdate();
+            return "1 row inserted:book inserted successfully";
+
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public ArrayList<Book> getAllBooks() {
+        ArrayList<Book> blist=new ArrayList<Book>();
+        con = DBManager.getConnection();
+        try
+        {
+            Statement st=con.createStatement();
+            ResultSet rs=st.executeQuery("select * from book");
+            while(rs.next())
+            {
+                Book book=new Book(rs.getInt(1),rs.getString(2),rs.getInt(3));
+                blist.add(book);
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return blist;
+    }
+
+    @Override
+    public Book getABook(int bookId) {
+       /* for(Book book:blist)
+        {
+            if(book.getBookId()==bookId)
+                return book;
+        }*/
+        con=DBManager.getConnection();
+        Book book=null;
+        try
+        {
+            Statement st=con.createStatement();
+            ResultSet rs=st.executeQuery("select * from book where bookid="+bookId);
+            while(rs.next())
+            {
+                book=new Book(rs.getInt(1),rs.getString(2),rs.getInt(3) );
+
+            }
+
+
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return book;
+
+    }
+
+    @Override
+    public String setBookPrice(int bookId, int upPrice) {
+        /*Book book=getABook(bookId);
+        book.setBookPrice(upPrice);
+        return "Book price updated successfully";*/
+        PreparedStatement ps=null;
+        String str="update book set bookprice= ? where bookid= ?";
+        con=DBManager.getConnection();
+        try {
+            ps=con.prepareStatement(str);
+            ps.setInt(1,upPrice);
+            ps.setInt(2,bookId);
+            ps.executeUpdate();
+            return "bookprice updated successfully. 1 row updated";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return ("updation fail due to exception");
+        }
+
+    }
+}
+
+
+DBManager class creating connection:
+====================================
+
+package BookOpPack;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DBManager {
+
+    private static Connection con;
+    public static Connection getConnection()
+    {
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookdatabase", "root", "roun123$");
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return con;
+
+    }
+}
+
+
+BookStoreMain main class:
+===========================
+
+package mainUIpack;
+
+import Model.Book;
+import BookOpPack.BookOperationImpl;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class BookStoreMain {
+    public static void main(String[] args)
+    {
+        Scanner sc=new Scanner(System.in);
+        BookOperationImpl boi=new BookOperationImpl();
+        while(true)
+        {
+            System.out.println("1.add the book");
+            System.out.println("2.list all the books");
+            System.out.println("3.get a book");
+            System.out.println("4.update a book price");
+            System.out.println("5.exit");
+
+            System.out.println("enter ur choice");
+            int choice=sc.nextInt();
+            switch(choice)
+            {
+                case 1:
+                {
+                    System.out.println("enter the details of the book");
+                    int bookId=sc.nextInt();
+                    String bookName=sc.next();
+                    int bookPrice=sc.nextInt();
+                    Book book=new Book(bookId,bookName,bookPrice);
+
+                    System.out.println(boi.addABook(book));
+                    break;
+                }
+                case 2:
+                {
+                    ArrayList<Book> blist=boi.getAllBooks();
+                    for(Book book:blist)
+                    {
+                        System.out.println(book);
+                    }
+
+                    break;
+                }
+                case 3:
+                {
+                    System.out.println("enter the book id to be searched");
+                    int bookId=sc.nextInt();
+                    Book book =boi.getABook(bookId);
+                    if(book!=null)
+                    {
+                        System.out.println(book);
+                    }
+                    else
+                    {
+                        System.out.println("book doesn't found in the store");
+                    }
+                    break;
+
+                }
+                case 4:
+                {
+                    System.out.println("enter the bookId");
+                    int bookId=sc.nextInt();
+                    System.out.println("enter the updated price of the book");
+                    int upPrice=sc.nextInt();
+                    System.out.println(boi.setBookPrice(bookId,upPrice));
+                    System.out.println("updated book list is ");
+                   ArrayList<Book> blist=boi.getAllBooks();
+                   for(Book b:blist)
+                   {
+                       System.out.println(b);
+                   }
+                    break;
+                }
+                default:
+                    sc.close();
+                    System.out.println("bye bye!!!");
+                    System.exit(0);
+
+            }
+        }
+    }
+}
+
+
+output:
+============
+
+1.add the book
+2.list all the books
+3.get a book
+4.update a book price
+5.exit
+enter ur choice
+4
+enter the bookId
+30
+enter the updated price of the book
+800
+bookprice updated successfully. 1 row updated
+updated book list is 
+Book{book_id=10, bookName='java', bookPrice=500}
+Book{book_id=20, bookName='css', bookPrice=400}
+Book{book_id=30, bookName='python', bookPrice=800}
+Book{book_id=100, bookName='html', bookPrice=200}
+1.add the book
+2.list all the books
+3.get a book
+4.update a book price
+5.exit
+enter ur choice
+
+
+2.JDBC Metadata project:
+=========================
+
+import java.sql.*;
+
+public class Main {
+    public  static  void  main(String[] args) throws SQLException {
+        Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/bookdatabase","root","roun123$");
+        Statement st=con.createStatement();
+        ResultSet rs=st.executeQuery("select * from book");
+
+        ResultSetMetaData rsmd=rs.getMetaData();
+        System.out.println("Total no, of columns: "+rsmd.getColumnCount());
+        System.out.println("column name of 1st column: "+rsmd.getColumnName(1));
+        System.out.println("column type of 1st column"+rsmd.getColumnTypeName(1));
+    }
+
+}
+
+
+output:
+==========
+
+Total no, of columns: 3
+column name of 1st column: bookid
+column type of 1st columnINT
+
+Process finished with exit code 0
+
+
+4.Transient variable in Serialization:
+======================================
+
+a. points to remember about Serialization and Deserialization:
+--------------------------------------------------------------
+
+1. transient and static variables are not saved during serialization.
+2.During deserialization the static vriables and transient variables are given their default values 
+int total------>default value of int is O;
+3. a class cannot save its object if it has does implement serializable interface
+4. during deserialization the constructor of the serializable object is not executed because no new objects are created.
+5. if the super/base class implements serializable all objects of the sub class becomes serializable.
+6. if super class is not serialized and sub class is serialized then during deserilzation  the default constructor of the
+   super class is executed.
+    If a default constructor / Non paramatized constructor not present in super class then 
+     an exception is thrown .
+Student class:
+================
+
+
+package com.company.spack;
+
+import java.io.Serializable;
+
+public class Student implements Serializable {
+
+    private int id;
+    private int m1;
+    private int m2;
+    private int m3;
+    private transient int total;
+
+    public Student(int id, int m1, int m2, int m3) {
+        this.id = id;
+        this.m1 = m1;
+        this.m2 = m2;
+        this.m3 = m3;
+    }
+
+    public void setTotal() {
+        this.total = m1+m2+m3;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getM1() {
+        return m1;
+    }
+
+    public int getM2() {
+        return m2;
+    }
+
+    public int getM3() {
+        return m3;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", m1=" + m1 +
+                ", m2=" + m2 +
+                ", m3=" + m3 +
+                ", total=" + total +
+                '}';
+    }
+}
+
+
+WriteObject class:
+=================
+
+package com.company.fpack;
+
+import com.company.spack.Student;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class WriteObjectClass {
+    public void writeObject()
+    {
+        File file1=new File("C:\\Users\\user124\\Desktop\\student.dat"); //destination file
+
+        try(FileOutputStream output=new FileOutputStream(file1);
+            ObjectOutputStream out=new ObjectOutputStream(output);)
+        {
+            ArrayList<Student> slist=new ArrayList<Student>();
+            slist.add(new Student(1,80,90,85));
+            slist.add(new Student(2,90,98,95));
+            Iterator<Student> it=slist.iterator();
+            while(it.hasNext())
+            {
+                Student s=it.next();
+                s.setTotal();
+                System.out.println(s);
+                out.writeObject(s);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+}
+
+
+ReadObject class:
+================
+
+package com.company.fpack;
+
+import com.company.spack.Student;
+
+import java.io.*;
+
+public class ReadObjectClass {
+
+    public void ReadObject() throws FileNotFoundException {
+        File file1 = new File("C:\\Users\\user124\\Desktop\\student.dat"); //destination file
+        try (FileInputStream input = new FileInputStream(file1);
+             ObjectInputStream in = new ObjectInputStream(input);)
+        {
+            System.out.println("reading the object into the file");
+            while(input.available()>0)
+            {
+
+                Student sob=(Student) in.readObject();
+                sob.setTotal();
+                System.out.println(sob);
+            }
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+main class:
+==============
+
+package com.company;
+
+import com.company.fpack.ReadObjectClass;
+import com.company.fpack.WriteObjectClass;
+
+import java.io.FileNotFoundException;
+
+public class Main {
+
+    public static void main(String[] args) throws FileNotFoundException {
+	// write your code here
+        WriteObjectClass wob=new WriteObjectClass();
+        wob.writeObject();
+
+        ReadObjectClass rob=new ReadObjectClass();
+        rob.ReadObject();
+    }
+}
+
+
+output:
+======
+
+
+Student{id=1, m1=80, m2=90, m3=85, total=255}
+Student{id=2, m1=90, m2=98, m3=95, total=283}
+reading the object into the file
+Student{id=1, m1=80, m2=90, m3=85, total=255}
+Student{id=2, m1=90, m2=98, m3=95, total=283}
+
+Process finished with exit code 0
+
+
+CustomerBilling Book Project using JDBC:
+=========================================
+
+mODEL PACKAGE:
+==============
+
+book class:
+===========
+
+package Model;
+
+public class Book {
+    private int bookId;
+    private String bookName;
+    private int bookPrice;
+
+    public Book(int bookId, String bookName, int bookPrice) {
+        this.bookId = bookId;
+        this.bookName = bookName;
+        this.bookPrice = bookPrice;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public int getBookPrice() {
+        return bookPrice;
+    }
+
+    public void setBookPrice(int bookPrice) {
+        this.bookPrice = bookPrice;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "book_id=" + bookId +
+                ", bookName='" + bookName + '\'' +
+                ", bookPrice=" + bookPrice +
+                '}';
+    }
+}
+
+BookOp pack:
+=============
+
+BookOperation Interfacce:
+==========================
+
+package BookOpPack;
+
+import Model.Book;
+
+import java.util.ArrayList;
+
+public interface BookOperations {
+    String addABook(Book book);
+    ArrayList<Book> getAllBooks();
+    Book getABook(int bookId);
+    String setBookPrice(int bookId,int upPrice);
+}
+
+
+BookOperation Implementation class:
+===================================
+
+
+package BookOpPack;
+
+import Model.Book;
+
+import java.sql.*;
+import java.util.ArrayList;
+
+public class BookOperationImpl implements BookOperations {
+    public static Connection con=null;
+
+    @Override
+    public String addABook(Book book) {
+        /*blist.add(book);
+        return "book added successfully";*/
+        PreparedStatement ps=null;
+        con=DBManager.getConnection();
+        String str="insert into book values (?,?,?)";
+        try
+        {
+            ps=con.prepareStatement(str);
+            ps.setInt(1,book.getBookId());
+            ps.setString(2,book.getBookName());
+            ps.setInt(3,book.getBookPrice());
+            ps.executeUpdate();
+            return "1 row inserted:book inserted successfully";
+
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public ArrayList<Book> getAllBooks() {
+        ArrayList<Book> blist=new ArrayList<Book>();
+        con = DBManager.getConnection();
+        try
+        {
+            Statement st=con.createStatement();
+            ResultSet rs=st.executeQuery("select * from book");
+            while(rs.next())
+            {
+                Book book=new Book(rs.getInt(1),rs.getString(2),rs.getInt(3));
+                blist.add(book);
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return blist;
+    }
+
+    @Override
+    public Book getABook(int bookId) {
+       /* for(Book book:blist)
+        {
+            if(book.getBookId()==bookId)
+                return book;
+        }*/
+        con=DBManager.getConnection();
+        Book book=null;
+        try
+        {
+            Statement st=con.createStatement();
+            ResultSet rs=st.executeQuery("select * from book where bookid="+bookId);
+            while(rs.next())
+            {
+                book=new Book(rs.getInt(1),rs.getString(2),rs.getInt(3) );
+
+            }
+
+
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return book;
+
+    }
+
+    @Override
+    public String setBookPrice(int bookId, int upPrice) {
+        /*Book book=getABook(bookId);
+        book.setBookPrice(upPrice);
+        return "Book price updated successfully";*/
+        PreparedStatement ps=null;
+        String str="update book set bookprice= ? where bookid= ?";
+        con=DBManager.getConnection();
+        try {
+            ps=con.prepareStatement(str);
+            ps.setInt(1,upPrice);
+            ps.setInt(2,bookId);
+            ps.executeUpdate();
+            return "bookprice updated successfully. 1 row updated";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return ("updation fail due to exception");
+        }
+
+    }
+}
+
+
+DBManager class:
+==================
+
+package BookOpPack;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DBManager {
+
+    private static Connection con;
+    public static Connection getConnection()
+    {
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookdatabase", "root", "roun123$");
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return con;
+
+    }
+}
+
+
+Customer Pack package:
+=========================
+
+
+CustOperation Interface:
+========================
+
+package CustOp;
+
+import Model.Book;
+
+public interface CustOperation {
+    void addToCart(Book book,int qty);
+    double getBill();
+
+}
+
+CustOperation Implementation class:
+=====================================
+
+
+package CustOp;
+
+import BookOpPack.DBManager;
+import Model.Book;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class CustOperationsImpl implements CustOperation {
+
+    private static int count=1;
+    private final int tid;
+    private ArrayList<Book> slist=new ArrayList<Book>();
+    private Map<Integer,Integer> smap=new HashMap<Integer,Integer>();
+    public CustOperationsImpl() {
+        this.tid = count++;
+    }
+
+    public int getTid() {
+        return tid;
+    }
+
+    @Override
+    public void addToCart(Book book,int qty) {
+        slist.add(book);
+        smap.put(book.getBookId(),book.getBookPrice()*qty);
+
+
+    }
+
+    @Override
+    public double getBill() {
+        int totamt=0;
+        for (Integer key: smap.keySet())
+        {
+            totamt=smap.get(key);
+        }
+        PreparedStatement ps=null;
+        Connection con = DBManager.getConnection();
+        String str="insert into custtransaction values(?,?)";
+        try
+        {
+            ps=con.prepareStatement(str);
+            ps.setInt(1,tid);
+            ps.setDouble(2,totamt);
+            ps.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return totamt;
+    }
+}
+
+
+MainUIPack class:
+===================
+
+BookStore Main class:
+======================
+
+package mainUIpack;
+
+import BookOpPack.BookOperationImpl;
+import CustOp.CustOperationsImpl;
+import Model.Book;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class BookStoreMain {
+    public static void main(String[] args)
+    {
+        Scanner sc=new Scanner(System.in);
+        BookOperationImpl boi=new BookOperationImpl();
+        while(true)
+        {
+            System.out.println("1.add the book"); //admin
+            System.out.println("2.list all the books"); //admin customer
+            System.out.println("3.get a book"); //admin customer
+            System.out.println("4.update a book price"); //admin
+            System.out.println("5.Add to cart and billing"); //customer
+            //System.out.println("6.billing");
+            System.out.println("7.exit");
+
+            System.out.println("enter ur choice");
+            int choice=sc.nextInt();
+            switch(choice)
+            {
+                case 1:
+                {
+                    System.out.println("enter the details of the book");
+                    int bookId=sc.nextInt();
+                    String bookName=sc.next();
+                    int bookPrice=sc.nextInt();
+                    Book book=new Book(bookId,bookName,bookPrice);
+
+                    System.out.println(boi.addABook(book));
+                    break;
+                }
+                case 2:
+                {
+                    ArrayList<Book> blist=boi.getAllBooks();
+                    for(Book book:blist)
+                    {
+                        System.out.println(book);
+                    }
+
+                    break;
+                }
+                case 3:
+                {
+                    System.out.println("enter the book id to be searched");
+                    int bookId=sc.nextInt();
+                    Book book =boi.getABook(bookId);
+                    if(book!=null)
+                    {
+                        System.out.println(book);
+                    }
+                    else
+                    {
+                        System.out.println("book doesn't found in the store");
+                    }
+                    break;
+
+                }
+                case 4:
+                {
+                    System.out.println("enter the bookId");
+                    int bookId=sc.nextInt();
+                    System.out.println("enter the updated price of the book");
+                    int upPrice=sc.nextInt();
+                    System.out.println(boi.setBookPrice(bookId,upPrice));
+                    System.out.println("updated book list is ");
+                   ArrayList<Book> blist=boi.getAllBooks();
+                   for(Book b:blist)
+                   {
+                       System.out.println(b);
+                   }
+                    break;
+                }
+                case 5:
+                {
+                    System.out.println();
+                    CustOperationsImpl cust=new CustOperationsImpl();
+                    while(true)
+                    {
+
+                        String ch="Y";
+                        System.out.println("enter the book to add to the cart");
+                        int bookId= sc.nextInt();
+                        System.out.println("enter the no of copies");
+                        int qty=sc.nextInt();
+                        Book book=boi.getABook(bookId);
+                        cust.addToCart(book,qty);
+                        System.out.println("do u want to continue dding");
+                        ch=sc.next();
+                        if(ch.charAt(0)=='N')
+                            break;
+                    }
+
+                    System.out.println("bill amount"+cust.getBill());
+                    break;
+                }
+
+                default:
+                    sc.close();
+                    System.out.println("bye bye!!!");
+                    System.exit(0);
+
+            }
+        }
+    }
+}
+
+
+Output:
+==========
+
+1.add the book
+2.list all the books
+3.get a book
+4.update a book price
+5.Add to cart and billing
+7.exit
+enter ur choice
+5
+
+enter the book to add to the cart
+100
+enter the no of copies
+2
+do u want to continue dding
+N
+bill amount400.0
+1.add the book
+2.list all the books
+3.get a book
+4.update a book price
+5.Add to cart and billing
+7.exit
+enter ur choice
+
+
