@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hi</title>
+    <h1>welcome</h1>
+    <h2>welcome</h2>
+    <h3>welcome</h3>
+    <h4>welcome</h4>
+    <h5>welcome</h5>
+    <p>
+        hi this is about<br>
+        html
+    </p>
+</head>
+<body>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hi</title>
+    <h1>welcome</h1>
+    <h2>welcome</h2>
+    <h3>welcome</h3>
+    <h4>welcome</h4>
+    <h5>welcome</h5>
+    <p>
+        hi this is about<br>
+        html
+    </p>
+</head>
+<body>
+
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hi</title>
+    <h1>welcome</h1>
+    <h2>welcome</h2>
+    <h3>welcome</h3>
+    <h4>welcome</h4>
+    <h5>welcome</h5>
+    <p>
+        hi this is about<br>
+        html
+    </p>
+</head>
+<body>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My first HTML project </title>
+</head>
+<!--Blink  layout Engine for chrome-->
+<body>
+ <!--header tags-->
+<h1>Welcome all to HTML world !!!!</h1>
+<h2>Welcome all to HTML world !!!!</h2>
+<h3>Welcome all to HTML world !!!!</h3>
+<h4>Welcome all to HTML world !!!!</h4>
+<h5>Welcome all to HTML world !!!!</h5>
+<h6>Welcome all to HTML world !!!!</h6>
+<p>
+   This morining we started learing  &nbsp; about html tags <br>
+    Hope we all enjoy it
+</p>
+<!--html  element can be added  with attributes extra property attached with tag-->
+<!--
+anchor tag  with attribute href
+-->
+<a href="https://www.w3schools.com/">Go visit W3 schools</a>
+<br>
+<br>
+<img src="projimages\Subhadra.jpg" width="150" height="150">
+ <br>
+ <br>
+<img src="https://www.bigbasket.com/media/uploads/p/l/20001037_11-fresho-chrysanthemumshevanti-flower.jpg" width="150" height="150">
+<!--
+iframe tag specifies a inline frame
+used to embed another document within the current HTML document
+-->
+<p align="center">
+ <iframe src=" /src/main/webapp/index1.html"   width="200" height="200" ></iframe>
+</p>
+ <table height="500" width="500" border="1">
+     <tr>
+         <th>Product Id</th>
+         <th>Product Name</th>
+         <th>Product Price</th>
+     </tr>
+     <tr>
+         <td>100</td>
+         <td>Books</td>
+         <td>300</td>
+     </tr>
+     <tr>
+         <td>200</td>
+         <td>CDs</td>
+         <td>300</td>
+     </tr>
+ </table>
+
+
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Formatting tags</title>
+</head>
+<body>
+This is <b>very very important.</b>
+<br>
+this is <b><i>very very important</i></b>
+<br>
+this is <small>very very important</small>
+<br>
+This is <em>very very important</em>
+<br>
+This is <u>very very important</u>
+<br>
+this is <mark> very very important</mark>
+<br>
+this is <sub>very very important</sub>
+<br>
+this is <sup>very very important</sup>
+<br>
+this is <strike>very very important</strike>
+<br>
+this is <strong>very very important</strong>
+<br>
+this is <tt>very very important</tt>
+<br>
+this is <ins>very very important</ins>
+<br>
+this is <del>very very important</del>
+
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Formatting tags</title>
+</head>
+<body>
+This is <b>very very important.</b>
+<br>
+this is <b><i>very very important</i></b>
+<br>
+this is <small>very very important</small>
+<br>
+This is <em>very very important</em>
+<br>
+This is <u>very very important</u>
+<br>
+this is <mark> very very important</mark>
+<br>
+this is <sub>very very important</sub>
+<br>
+this is <sup>very very important</sup>
+<br>
+this is <strike>very very important</strike>
+<br>
+this is <strong>very very important</strong>
+<br>
+this is <tt>very very important</tt>
+<br>
+this is <ins>very very important</ins>
+<br>
+this is <del>very very important</del>
+
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form tags</title>
+</head>
+<body>
+<form action="/src/main/webapp/index1.html"  method="get">
+    <label>First name:</label>
+    <input type="text" name="fname" id="fname"><br>
+    <label>Last name</label>
+    <input type="text" name="lname" id="lname"><br>
+    <label>password</label>
+    <input type="password" name="pword" id="pword"><br>
+    <label>Address</label>
+    <textarea rows="10" cols="10" name="addrs"></textarea><br>
+    <label> States</label>
+    <!--String states = karnataka -->
+    <select name="states" id="states">
+      <option value="karnataka">  Karnataka</option>
+        <option value="tamilnadu">Tamilnadu</option>
+        <option value="telangana">Telangana</option>
+        <option value="kerala">Kerala</option>
+    </select>
+    <br>
+    <br>
+
+    <!--radio button-->
+    <input type="radio" id="fruit" name="fruit" value="apple">
+    <label for="fruit">APPLE</label>
+    <br>
+    <br>
+    <input type="radio" id="fruit1" name="fruit1" value="grapes">
+    <label for="fruit1">GRAPES</label>
+    <br>
+    <br>
+    <!--check box-->
+    <input type="checkbox" id="2vaccination" name="2vaccination" value="2">
+    <label for="2vaccination">Completed 2 vaccinations</label>
+    <input type="checkbox" id="1vaccination" name="1vaccination" value="1">
+    <label for="1vaccination">Completed 1 vaccinations</label>
+    <input type="checkbox" id="0vaccination" name="0vaccination" value="0">
+    <label for="0vaccination">Not vaccinated</label>
+    <br>
+    <br>
+    <label for doj>Join Date</label>
+    <input type="date" id="doj" name="doj">
+    <br>
+    <br>
+    <label for qty>Quantity (between 1-5)</label>
+    <input type="number" id="qty" name="qty" min="1" max="5">
+    <br>
+    <br>
+    <label for="myfile">Select files from the local drive</label>
+    <input type="file" id="myfile" name="myfile" multiple>
+    <br>
+    <br>
+    <label for="mymail">Enter your email</label>
+    <input type="email" id="mymail" name="mymail">
+    <br>
+    <br>
+    
+
+
+
+
+    <input type="submit" value="Submit">
+
+
+</form>
+</body>
+</html>
