@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Traindetails</title>
+</head>
+<body>
+
+<table align="center"  height="200" width="200" border="1">
+    <tr>
+        <th>TRAIN_NO</th>
+        <th>TRAIN_NAME</th>
+        <th>SOURCE</th>
+        <th>DESTINATION</th>
+        <th>TICKET_PRICE</th>
+    </tr>
+    <tr>
+        <td>1001</td>
+        <td>ShatabdiExpress</td>
+        <td>Banglore</td>
+        <td>Delhi</td>
+        <td>2500</td>
+    </tr>
+    <tr>
+        <td>1002</td>
+        <td>ShatabdiExpress</td>
+        <td>Delhi</td>
+        <td>Banglore</td>
+        <td>2500</td>
+    </tr>
+    <tr>
+        <td>1003</td>
+        <td>UdyanExpress</td>
+        <td>Banglore</td>
+        <td>Mumbai</td>
+        <td>1500</td>
+    </tr>
+    <tr>
+        <td>1004</td>
+        <td>UdyanExpress</td>
+        <td>Mumbai</td>
+        <td>Banglore</td>
+        <td>1500</td>
+    </tr>
+    <tr>
+        <td>1005</td>
+        <td>BrindavanExpress</td>
+        <td>Banglore</td>
+        <td>Chennai</td>
+        <td>1000</td>
+    </tr>
+    <tr>
+        <td>1006</td>
+        <td>BrindavanExpress</td>
+        <td>Chennai</td>
+        <td>Banglore</td>
+        <td>1000</td>
+    </tr>
+</table>
+<form>
+    <p align="center">
+    <input type="submit" value="BookTicket"></p>
+
+</form>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmticket</title>
+</head>
+<body>
+<h1 align="center">Ticket has been booked successfully...</h1>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BookTicket</title>
+</head>
+<body>
+<form action="">
+        <p>Enter train number:</p>
+        <input type="text" id="train_number" name="train_number" required/>
+        <p>Choose travel date:</p>
+        <input type="date" id="travel_date" name="travel date" required/>
+        <p>Enter number of passengers:</p>
+        <input type="number" id="passengers" name="passengers" required/>
+        <form action="">
+
+        <h3><u>Enter passenger details</u></h3>
+        <p>Enter passenger name:</p>
+        <input type="text" id="pass_name" name="pass_name" required/>
+        <p>Enter age:</p>
+
+        <input type="number" id="pass_age" name="pass_age"required/>
+        <p>Enter gender:</p>
+        male<input type="radio" id="pass_gen" name="pass_gen" required/>
+        female<input type="radio" id="pass_gen1" name="pass_gen" required><br>
+        </form><br>
+    <input type="submit">
+</form>
+</body>
+</html>
