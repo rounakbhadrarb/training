@@ -1,0 +1,608 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>First Javascript demo</title>
+</head>
+<body>
+<p id="demo">welcome</p>
+
+<script type="text/javascript">
+    document.getElementById("demo").innerHTML="welcome to Javascript world"
+
+
+<!--    var str1="welcome us";-->
+<!--    var str2="welcome javascript";-->
+<!--    document.write(str1+"  "+str2);-->
+<!--    var t=10+20;-->
+<!--    alert(10+20);-->
+
+<!--    var a=prompt("enter a number");-->
+<!--    var b=prompt("enter a number");-->
+<!--    var sum=0;-->
+<!--&lt;!&ndash;    sum+=(Number)(a);&ndash;&gt;-->
+<!--sum=parseInt(a)+parseInt(b);-->
+<!--    alert(sum);-->
+<!--var res=0;-->
+<!--for(let i=1;i<=3;i++)-->
+<!--{-->
+<!--res+=(Number)(prompt("enter a number","0"));-->
+<!--}-->
+<!--alert(res);-->
+
+<!--var num1=150;-->
+<!--var num2=120;-->
+<!--var num3=20;-->
+<!--if(num1>num2)-->
+<!-- document.write(num1+" is largest");-->
+<!--else-->
+<!-- document.write(num2+" is largest");-->
+
+<!--var lar=((num1>num2)&&(num1>num3))?num1:((num2>num3)?num2:num3);-->
+<!--document.write(lar+"is largest");-->
+<!--var city="Bangalore";-->
+<!--document.write("<br/>");-->
+<!--switch(city)-->
+<!--{-->
+<!--case "Bangalore":-->
+<!-- document.write("its matching");-->
+<!-- break;-->
+<!--case "Chennai":-->
+<!-- document.write("very hot city");-->
+<!-- break;-->
+<!--}-->
+
+let x;
+x=5;
+x="Jack";
+x='jill';
+x='jack and "jill"';
+document.write(x);
+
+let n1=54.55;
+n1=54;
+document.write(n1);
+
+let m=10;
+let n=15;
+document.write(m==n);
+
+const city1=["Bangalore","chennai","kolkata"];
+document.write("<br>"+city1[1]);
+
+//object are complex variables.It described by many other variables
+//it always key:value paired
+const car1={type:"sedan",model:"700",colour:"blue"};
+document.write("<br>"+car1.type);
+document.write("<br>"+car1);
+const carr=[{type:"sedan",model:"700",colour:"blue"},{type:"suv",model:"500",colour:"blue"}];
+for(let k=0;k<carr.length;k++)
+{
+ document.write("<br/>"+carr[k].type)+"<br/>";
+}
+
+</script>
+
+</body>
+</html>
+
+Typecasting:
+============
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Type conversion</title>
+</head>
+<body>
+<p id="demo"></p>
+<script type="text/javascript">
+       let y="5";
+        document.write(typeof y+" value of y "+y+"<br>");
+       let z=+y;
+        document.write(typeof y+" value of y "+y+"<br>");
+       document.write(typeof z+" value of z "+z+"<br>");
+
+       let x=333;
+           document.write(typeof x+"<br>");
+           document.write(String(x)+"<br>");
+           document.write((45+30).toString()+"<br>");
+
+           document.write(Number(false)+"<br>");
+           document.write(Number(true)+"<br>");
+    </script>
+</body>
+</html>
+
+
+output:
+=========
+string value of y 5
+string value of y 5
+number value of z 5
+number
+333
+75
+0
+1
+
+javasscript Array:
+===================
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS Arrray</title>
+    <script type="text/javascript">
+    myArray=new Array("Wind","Rain","Fire","Water","Sky");
+    urArray=new Array("Earth","Universe");
+    document.write(myArray+"<br>"+"<br>");
+    //for each element loop
+    for(i in myArray)
+    {
+    document.write("Array element is:"+myArray[i]+"<br>");
+    }
+    //joins:joins all element into a string
+    document.write(myArray.join()+"<br>");
+    //concat:merging two arrays
+    document.write(myArray.concat(urArray)+"<br>");
+    //pop:removes the first element from the array
+       document.write(myArray.pop()+"<br>");
+       //shift:removes the first element of the array
+         document.write(myArray.shift()+"<br>");
+         //unshift:adds one or more elements in the beginning of the array
+         //returns the length
+          document.write(myArray.unshift("Ocean","Storm")+"<br>");
+          for(i in myArray)
+          {
+           document.write("Array element is:"+myArray[i]+"<br>");
+           }
+           //sort:sort in ascending order and returns the array
+            document.write(myArray.sort()+"<br>");
+            //reverse
+               document.write(myArray.reverse()+"<br>");
+
+               //slice:to extract a sub array from an array
+               subArray=myArray.slice(1,3);
+               document.write(subArray+"<br>");
+               document.write(myArray+"<br>");
+    </script>
+</head>
+</body>
+</html>
+
+
+output:
+======
+
+Wind,Rain,Fire,Water,Sky
+
+Array element is:Wind
+Array element is:Rain
+Array element is:Fire
+Array element is:Water
+Array element is:Sky
+Wind,Rain,Fire,Water,Sky
+Wind,Rain,Fire,Water,Sky,Earth,Universe
+Sky
+Wind
+5
+Array element is:Ocean
+Array element is:Storm
+Array element is:Rain
+Array element is:Fire
+Array element is:Water
+Fire,Ocean,Rain,Storm,Water
+Water,Storm,Rain,Ocean,Fire
+Storm,Rain
+Water,Storm,Rain,Ocean,Fire
+
+
+
+
+
+
+
+
+output:
+welcome to Javascript world
+
+jack and "jill"54false
+chennai
+sedan
+[object Object]
+sedan
+suv
+
+
+
+String Linking with url:
+=========================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+mystr1 = new String("Click here to go attendace sheet ");
+document.write(mystr1.link("https://docs.google.com")+"<br>");
+</script>
+</body>
+</html>
+
+
+output:
+========
+Click here to go attendace sheet
+
+
+string:
+=======
+
+mystr1 = new String("Click here to go attendace sheet ");
+<!--document.write(mystr1.link("https://docs.google.com")+"<br>")-->
+
+document.write(mystr1.big()+"<br>");
+document.write(mystr1.bold()+"<br>");
+document.write(mystr1.charAt(0)+"<br>");
+document.write(mystr1.charCodeAt(0)+"<br>");
+
+ms="Welcome to Javascript world";
+splitms=ms.split(" ");
+for(i in splitms)
+{
+document.write(splitms[i]+"<br>");
+}
+document.write(ms.slice(7,13)+"<br>");
+document.write(ms.slice(-12,-6)+"<br>");
+</script>
+
+
+output:
+=======
+
+Click here to go attendace sheet
+Click here to go attendace sheet
+C
+67
+Welcome
+to
+Javascript
+world
+to Ja
+script
+
+Javascript function:
+====================
+
+functin:
+========
+function add(x,y)
+{
+ return(x+y);
+}
+
+html:
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="Myjsfile.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+alert(add(10,10));
+</script>
+</body>
+</html>
+
+javascript reverse number:
+==========================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ReverseNum</title>
+</head>
+<body>
+<p id="demo"></p>
+<script type="text/javascript">
+    var num=1234;
+    var revnum=0;
+    var t=num;
+    while(num!=0)
+    {
+    let rem=num%10;
+    revnum=(revnum*10)+rem;
+    num=parseInt(num/10);
+    }
+    document.getElementById("demo").innerHTML="REVERSE OF THE NUMBER IS "+revnum;
+</script>
+</body>
+</html>
+
+output:
+=======
+REVERSE OF THE NUMBER IS 4321
+
+javascript basics:
+=================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>First Javascript demo</title>
+</head>
+<body>
+<p id="demo">welcome</p>
+
+<script type="text/javascript">
+    document.getElementById("demo").innerHTML="welcome to Javascript world"
+
+
+<!--    var str1="welcome us";-->
+<!--    var str2="welcome javascript";-->
+<!--    document.write(str1+"  "+str2);-->
+<!--    var t=10+20;-->
+<!--    alert(10+20);-->
+
+<!--    var a=prompt("enter a number");-->
+<!--    var b=prompt("enter a number");-->
+<!--    var sum=0;-->
+<!--&lt;!&ndash;    sum+=(Number)(a);&ndash;&gt;-->
+<!--sum=parseInt(a)+parseInt(b);-->
+<!--    alert(sum);-->
+<!--var res=0;-->
+<!--for(let i=1;i<=3;i++)-->
+<!--{-->
+<!--res+=(Number)(prompt("enter a number","0"));-->
+<!--}-->
+<!--alert(res);-->
+
+<!--var num1=150;-->
+<!--var num2=120;-->
+<!--var num3=20;-->
+<!--if(num1>num2)-->
+<!-- document.write(num1+" is largest");-->
+<!--else-->
+<!-- document.write(num2+" is largest");-->
+
+<!--var lar=((num1>num2)&&(num1>num3))?num1:((num2>num3)?num2:num3);-->
+<!--document.write(lar+"is largest");-->
+<!--var city="Bangalore";-->
+<!--document.write("<br/>");-->
+<!--switch(city)-->
+<!--{-->
+<!--case "Bangalore":-->
+<!-- document.write("its matching");-->
+<!-- break;-->
+<!--case "Chennai":-->
+<!-- document.write("very hot city");-->
+<!-- break;-->
+<!--}-->
+
+let x;
+x=5;
+x="Jack";
+x='jill';
+x='jack and "jill"';
+document.write(x);
+
+let n1=54.55;
+n1=54;
+document.write(n1);
+
+let m=10;
+let n=15;
+document.write(m==n);
+
+const city1=["Bangalore","chennai","kolkata"];
+document.write("<br>"+city1[1]);
+
+//object are complex variables.It described by many other variables
+//it always key:value paired
+const car1={type:"sedan",model:"700",colour:"blue"};
+document.write("<br>"+car1.type);
+document.write("<br>"+car1);
+const carr=[{type:"sedan",model:"700",colour:"blue"},{type:"suv",model:"500",colour:"blue"}];
+for(let k=0;k<carr.length;k++)
+{
+ document.write("<br/>"+carr[k].type)+"<br/>";
+}
+
+</script>
+
+</body>
+</html>
+
+javascript function;
+=====================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS Function</title>
+</head>
+<body>
+<p id="demo"></p>
+<h1 id="ans"></h1>
+<script>
+document.getElementById("ans").innerHTML=func1(10,2);
+    function func1(a,b)
+    {
+    return a*b;
+    }
+</script>
+</body>
+</html>
+
+
+function1:
+=========
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Button Event using JS Function</title>
+</head>
+<body>
+Enter n1:<input type="text" id="n1" value="0"><br>
+Enter n2:<input type="text" id="n2" value="0"><br>
+<button type="button" id="button1" onclick="sum()">add</button>
+<button type="button" id="button2" onclick="sub()">sub</button>
+<button type="button" id="button3" onclick="div()">div</button>
+<button type="button" id="button4" onclick="mul()">mul</button>
+<h2 id="result"></h2>
+<script>
+    function sum()
+    {
+    var n1=document.getElementById("n1").value;
+    var n2=document.getElementById("n2").value;
+    let res=parseInt(n1)+parseInt(n2);
+    document.getElementById("result").innerHTML="ans="+res;
+    }
+    function sub()
+    {
+    var n1=document.getElementById("n1").value;
+    var n2=document.getElementById("n2").value;
+    let res=parseInt(n1)-parseInt(n2);
+    document.getElementById("result").innerHTML="ans="+res;
+    }
+    function div()
+    {
+    var n1=document.getElementById("n1").value;
+    var n2=document.getElementById("n2").value;
+    let res=parseInt(n1)/parseInt(n2);
+    document.getElementById("result").innerHTML="ans="+res;
+    }
+    function mul()
+    {
+    var n1=document.getElementById("n1").value;
+    var n2=document.getElementById("n2").value;
+    let res=parseInt(n1)*parseInt(n2);
+    document.getElementById("result").innerHTML="ans="+res;
+    }
+</script>
+</body>
+</html>
+
+function2:
+==========
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p id="res1"></p><br>
+<p id="res2"></p><br>
+<p id="res3"></p><br>
+
+<script>
+    function myfunction(x,y)
+    {
+    return x*y;
+    }
+    function Max()
+    {
+    let max=0;
+    for(let i=0;i<arguments.length;i++)
+    {
+    if(max<arguments[i])
+     max=arguments[i];
+    }
+    return max;
+    }
+    document.getElementById("res1").innerHTML=myfunction(5,15);
+    document.getElementById("res2").innerHTML=myfunction(5,10);
+    document.getElementById("res3").innerHTML=max(5,15,34,89,100,23,2);
+</script>
+
+</body>
+</html>
+
+function on blur on focus:
+=============================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OnblurrOnfocus</title>
+</head>
+<body>
+Enter your name:<input type="text" id="name" onblur="myFunction1()" onfocus="myFunction2(this)">
+<script>
+    function myFunction1()
+    {
+    var x=document.getElementById("name");
+    x.value=x.value.toUpperCase();
+    }
+    function myFunction2(x)
+    {
+    x.style.background="pink";
+    }
+</script>
+</body>
+</html>
+
+mouseevent:
+============
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MouseEvents</title>
+    <style type="text/css">
+        div{
+        width:200px;
+        height:100px;
+        border:3px solid black;
+        background-color:green;
+        }
+    </style>
+</head>
+<body>
+<div onmousemove="myFunction1()" onmouseout="clearFunction()" onmouseover="overFunction()">
+    Welcome to mouse events:move out
+</div>
+<br><br>
+<div onmouseout="clearFunction()" onmouseover="overFunction()">
+    welcome to mouse events:out over
+</div>
+<h2 id="demo"></h2>
+<script>
+    function myFunction1()
+    {
+    document.getElementById("demo").innerHTML="Mousemoved in";
+    }
+
+    function clearFunction()
+    {
+    document.getElementById("demo").innerHTML="Mousemoved out";
+    }
+
+    function overFunction()
+    {
+    document.getElementById("demo").innerHTML="Mousemoved over";
+    }
+</script>
+</body>
+</html
+
+
+
