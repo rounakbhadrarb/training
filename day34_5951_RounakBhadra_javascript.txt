@@ -1,0 +1,256 @@
+sum of array using javascript:
+==============================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ArrayInput</title>
+</head>
+<body>
+<input type="text" name="array[]" value=""/><br>
+<input type="text" name="array[]" value=""/><br>
+<input type="text" name="array[]" value=""/><br>
+<input type="text" name="array[]" value=""/><br>
+<input type="text" name="array[]" value=""/><br>
+<button type="button" id="button1" onclick="PrintSum()">click here</button>
+
+<p id="ans"></p>
+<p id="display"></p>
+</body>
+<script>
+function PrintSum()
+{
+    var inputarr=document.getElementsByName("array[]");
+    let sum=0;
+    let k="Array elements:";
+    for(let i=0;i<inputarr.length;i++)
+    {
+    let ele=parseInt(inputarr[i].value);
+    k=k+"["+i+"]:"+ele+"<br>";
+
+    sum+=ele;
+    }
+
+    document.getElementById("ans").innerHTML="sum is :"+sum;
+    document.getElementById("display").innerHTML="array is :"+k;
+}
+</script>
+</html>
+
+output:
+=======
+
+
+
+1
+
+2
+
+3
+
+4
+
+5
+
+click here
+sum is :15
+
+array is :Array elements:[0]:1
+[1]:2
+[2]:3
+[3]:4
+[4]:5
+
+
+my call back function:
+======================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CallBackFunction</title>
+</head>
+<body>
+<p id="res"></p>
+<script>
+    var s="";
+    function display(something)
+    {
+
+    s=s+"  "+something+"<br>";
+    document.getElementById("res").innerHTML=s;
+    }
+    function findMax(num1,num2,myCallBack)
+    {
+    let max=0;
+    if(num1>num2)
+     max=num1;
+    else
+     max=num2;
+     myCallBack(max);
+    }
+ function add(n1,n2,myCallBack)
+    {
+    let sum=n1+n2;
+    myCallBack(sum)
+    }
+findMax(50,500,display);
+    add(100,23,display);
+</script>
+
+</body>
+</html>
+
+output:
+==========
+
+500
+
+
+Add passenger programme:
+============================
+
+
+index.html:
+===========
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<input type="number" id="member" name="member" value="">Number of members: (max. 10)<br />
+<a href="#" id="filldetails" onclick="addFields()">Fill Details</a>
+<div id="container"/>
+</body>
+<script type='text/javascript' >
+    function addFields(){
+        // Number of inputs to create
+        var number = document.getElementById("member").value;
+        // Container <div> where dynamic content will be placed
+        var container = document.getElementById("container");
+        // Clear previous contents of the container
+        while (container.hasChildNodes()) {
+            container.removeChild(container.lastChild);
+        }
+        for (i=0;i<number;i++){
+            // Append a node with a random text
+            container.appendChild(document.createTextNode("Member " + (i+1)));
+            container.appendChild(document.createElement("br"));
+            // Create an <input> element, set its type and name attributes
+             container.appendChild(document.createTextNode("name"));
+            var input = document.createElement("input");
+            input.type = "text";
+            input.name = "name" + i;
+            container.appendChild(input);
+
+            container.appendChild(document.createTextNode("age"));
+            var input1 = document.createElement("input");
+            input1.type = "text";
+            input1.name = "age" + i;
+            container.appendChild(input1);
+
+            container.appendChild(document.createTextNode("gender"));
+            var input2 = document.createElement("input");
+            input2.type = "text";
+            input2.name = "gender" + i;
+            container.appendChild(input2);
+
+
+
+
+         // Append a line break
+            container.appendChild(document.createElement("br"));
+        }
+        let btn = document.createElement("button");
+     btn.innerHTML = "SUBMIT";
+      btn.onclick = function () {
+      alert("Confirmed ");
+
+      window.location.replace("index1.html");
+};
+document.body.appendChild(btn);
+
+    }
+</script>
+</html>
+
+
+index1.html:
+==============
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>index1</title>
+</head>
+<body>
+Thanks!!!
+</body>
+</html>
+
+
+mycallback:
+===========
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Callback</title>
+</head>
+<body>
+<input type="number" value="0" id="num1">
+<input type="number" value="0" id="num2">
+<input type="button" value="max" onclick="printMax()">
+<input type="button" value="sum" onclick="printSum()">
+<p id="res"></p><p id="res1">
+</p><script type="text/javascript">
+function printMax(){
+var num1 = parseInt(document.getElementById("num1").value);
+var num2 = parseInt(document.getElementById("num2").value);
+findMax(num1,num2,display);
+}
+function printSum(){
+var num1 = parseInt(document.getElementById("num1").value);
+var num2 = parseInt(document.getElementById("num2").value);
+findSum(num1,num2,display);
+}
+function display(data){document.getElementById("res").innerHTML=data;}
+<!-- function display1(data){-->
+<!-- document.getElementById("res1").innerHTML=data;-->
+<!-- }-->
+function findMax(num1,num2,myCallback)
+{
+let max = 0;if(num1>num2)max = num1;
+else
+max = num2;
+myCallback(max);
+}
+function findSum(num1,num2,myCallback){
+var sum=num1+num2;myCallback(sum);
+}
+<!-- findMax(15,5,display);-->
+<!-- findSum(15,5,display1);-->
+</script>
+</body>
+</html>
+
+
+output:
+=======
+
+5
+ 
+4
+  
+9
+
