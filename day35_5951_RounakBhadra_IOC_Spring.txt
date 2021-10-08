@@ -1,0 +1,228 @@
+day35_IOC_without and with:
+===========================
+
+
+Address.java:
+============
+package org.example;
+
+
+import lombok.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+public class Address {
+    private String doorNo;
+    private String street;
+    private String city;
+    private String state;
+    private String pin;
+}
+
+
+Customer.java:
+==================
+
+package org.example;
+import lombok.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+public class Customer {
+    private int custId;
+    private String custName;
+    private Address address;
+
+    public Customer(Address address)
+    {
+        this.address=address;
+    }
+}
+
+
+App.java:
+========
+
+package org.example;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    public static void main( String[] args )
+    {
+        /*Address address=new Address();
+        address.setDoorNo("17");
+        address.setStreet("rail road");
+        address.setCity("Majhdia");
+        address.setPin("741507");
+        address.setState("wb");*/
+Address address=new Address("17","rail road","majhdia","wb","741507");
+        Customer cust=new Customer(address);
+        cust.setCustId(100);
+        cust.setCustName("rounak");
+
+        /*cust.setAddress(address);*/
+        /*Customer cust=new Customer(50,"Rounak",address);*/
+
+        System.out.println(cust);
+
+    }
+}
+
+
+output:
+==========
+
+Customer(custId=100, custName=rounak, address=Address(doorNo=17, street=rail road, city=majhdia, state=wb, pin=741507))
+
+Process finished with exit code 0
+
+
+day35_IOC_Demo_uing xml:
+========================
+
+Address.java:
+=============
+
+package org.example;
+
+
+import lombok.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+public class Address {
+    private String doorNo;
+    private String street;
+    private String city;
+    private String state;
+    private String pin;
+}
+
+
+Customer.java:
+================
+
+package org.example;
+import lombok.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+public class Customer {
+    private int custId;
+    private String custName;
+    private Address address;
+    private Account account;
+
+    public Customer(Address address)
+    {
+        this.address=address;
+    }
+    public Customer(Account account)
+    {
+        this.account=account;
+    }
+}
+
+
+Account.java:
+=============
+
+package org.example;
+import lombok.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+public class Account {
+    private String accId;
+    private  String accType;
+}
+
+
+Beans.xml:
+===========
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+<bean id="address" class="org.example.Address"/>
+    <bean id="account" class="org.example.Account"/>
+    <bean id="customer" class="org.example.Customer">
+    <property name="address" ref="address"/>
+        <property name="account" ref="account"/>
+        <!--<constructor-arg ref="address"/>-->
+    </bean>
+</beans>
+
+App.java:
+==========
+
+
+package org.example;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class App
+{
+    public static void main( String[] args )
+    {
+        ApplicationContext context=new ClassPathXmlApplicationContext("file:src/main/java/beans.xml");
+        Customer customer=(Customer) context.getBean("customer");
+        customer.setCustId(100);
+        customer.setCustName("Rounak");
+
+        Address address=(Address) customer.getAddress();
+        address.setDoorNo("17");
+        address.setStreet("rail road");
+        address.setCity("majhdia");
+        address.setState("wb");
+        address.setPin("741507");
+
+        Account account=(Account)customer.getAccount();
+        account.setAccId("1001");
+        account.setAccType("Savings");
+
+        System.out.println(customer);
+
+        ClassPathXmlApplicationContext cpc=(ClassPathXmlApplicationContext) context;
+        cpc.close();
+    }
+}
+
+
+output:
+========
+
+
+Customer(custId=100, custName=Rounak, address=Address(doorNo=17, street=rail road, city=majhdia, state=wb, pin=741507), account=Account(accId=1001, accType=Savings))
+
+Process finished with exit code 0
+
+
+
+day35_IOC_AutoWireDemo:
+======================
+
+
+
