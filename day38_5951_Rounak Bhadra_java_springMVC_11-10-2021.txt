@@ -1,0 +1,195 @@
+SpringMVC:
+==========
+create maven project using webapp archetype
+add the tomcat server to project
+then run server
+then in pom file add all dependencies
+then add library
+targeted runtime in configure build path
+update maven dependencies
+run on server
+
+
+index.jsp:
+==========
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+hello world!
+<a href="/myspringMVCproj1/Loginform">go to login form</a>
+</body>
+</html>
+
+loginform.jsp:
+==============
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+hello world!
+<a href="/myspringMVCproj1/Loginform">go to login form</a>
+</body>
+</html>
+
+greetpage.jsp:
+===============
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<% String name = (String) request.getAttribute("name"); %>
+
+<%out.println(name); %><br>
+${name}
+${pass}
+
+</body>
+</html>
+
+spring-dispatcher-servlet.xml:
+===============================
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+ 
+  <context:component-scan base-package="controller" />
+ <mvc:annotation-driven/>
+ 
+
+  <bean id="viewResolver"
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
+        <property name="prefix">
+            <value>/WEB-INF/</value>
+        </property>
+        <property name="suffix">
+            <value>.jsp</value>
+        </property>
+ </bean>
+ 
+
+</beans>
+
+web.xml:
+============
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/2ee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>SpringMVCDemo1</display-name>
+  <absolute-ordering />
+
+  <welcome-file-list>    
+    <welcome-file>index.jsp</welcome-file>    
+  </welcome-file-list>
+  <servlet>
+        <servlet-name>spring-dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>     
+    <servlet-mapping>
+        <servlet-name>spring-dispatcher</servlet-name>
+        <url-pattern>/</url-pattern><!-- or *.jsp -->
+    </servlet-mapping>
+
+
+
+
+  <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+
+</web-app>
+
+Customercontroller.java:
+========================
+
+package controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class Customercontroller {
+
+
+
+@RequestMapping(value="/Loginform", method=RequestMethod.GET)
+public ModelAndView getLoginForm()
+{
+ModelAndView model = new ModelAndView("loginform");
+return model;
+}
+
+
+
+
+@RequestMapping(value="/GreetPage", method=RequestMethod.POST)
+public ModelAndView submitLoginForm(@RequestParam("name") String name,@RequestParam("pass") String pass)
+{
+ModelAndView model = new ModelAndView("greetpage");
+System.out.println(name);
+String msg = "Welcome "+name;
+model.addObject("msg",msg);
+return model;
+
+
+
+}
+
+
+
+@RequestMapping(value="/Greetpage", method=RequestMethod.POST)
+public String submitLoginForm1(@RequestParam("name") String name,@RequestParam("pass") String pass,ModelMap map)
+{
+map.addAttribute("name",name);
+map.addAttribute("pass",pass);
+
+
+
+
+return "greetpage";
+
+
+
+}
+
+
+
+
+}
+
+
