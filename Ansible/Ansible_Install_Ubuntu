@@ -1,0 +1,11 @@
+ 53  sudo apt install software-properties-common
+   54  sudo apt-add-repository ppa:ansible/ansible
+   55  sudo apt update
+   56  sudo apt install ansible
+   57  sudo apt-get install ansible
+   58  ansible --version
+   59  sudo apt install ansible
+   60  sudo apt --fix-broken install
+   61  ansible
+   62  ansible --version
+   63  cd /etc/ansible
