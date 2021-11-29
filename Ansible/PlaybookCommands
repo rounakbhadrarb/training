@@ -1,0 +1,115 @@
+    1  sudo apt-get update
+    2  sudo apt install ansible
+    3  sudo apt install openssh-server
+    4  ansible --version
+    5  cd /etc/ansible
+    6  find hosts
+    7  curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+    8  sudo apt install curl
+    9  curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+   10  python get-pip.py --user
+   11  sudo apt install python3
+   12  python get-pip.py --user
+   13  python3 get-pip.py --user
+   14  python -m pip install --user ansible
+   15  python3 -m pip install --user ansible
+   16  python3 -m pip install ansible
+   17  cd /etc/ansible
+   18  pip install ansible
+   19  sudo apt install python3-pip
+   20  pip install ansible
+   21  python3 -m pip install ansible
+   22  pip uninstall ansible
+   23  sudo apt install ansible
+   24  ansible
+   25  ansible --version
+   26  cd ..
+   27  ansible
+   28  cd etc
+   29  cd ansible
+   30  sudo apt update
+   31  sudo apt install software-properties-common
+   32  sudo add-apt-repository --yes --update ppa:ansible/ansible
+   33  sudo apt install ansible
+   34  ansible --version
+   35  cd /etc/ansible
+   36  cd /usr/bin/ansible
+   37  cd usr
+   38  find usr
+   39  cd ..
+   40  ls
+   41  cd ..
+   42  cd usr
+   43  cd /bin/ansible
+   44  cd bin
+   45  ls -la
+   46  cd ansible
+   47  ansible
+   48  ansible --version
+   49  cd ..
+   50  cd .
+   51  cd ~
+   52  ansible
+   53  sudo apt install software-properties-common
+   54  sudo apt-add-repository ppa:ansible/ansible
+   55  sudo apt update
+   56  sudo apt install ansible
+   57  sudo apt-get install ansible
+   58  ansible --version
+   59  sudo apt install ansible
+   60  sudo apt --fix-broken install
+   61  ansible
+   62  ansible --version
+   63  cd /etc/ansible
+   64  history
+   65  history>installAnsible.txt
+   66  history>>installAnsible.txt
+   67  cd ..
+   68  history>installAnsible.txt
+   69  history>installAnsible
+   70  chmod 777 installAnsible
+   71  touch installAnsible.txt
+   72  cd ~
+   73  history>installAnsible.txt
+   74  cd /etc/ansible
+   75  gedit hosts
+   76  ip a
+   77  sudo chmod 777 hosts
+   78  gedit hosts
+   79  cd ~
+   80  ls -la
+   81  ssh-keygen
+   82  cd /home/rivu
+   83  ssh-copy-id 198.168.211.84
+   84  cd home
+   85  cd /home
+   86  cd rivu
+   87  pwd
+   88  ssh-copy-id 192.168.211.84
+   89  ansible all -m ping
+   90  ssh 198.168.211.84
+   91  ssh rivu@198.168.211.84
+   92  gedit createfile.yaml
+   93  ansible-playbook /etc/ansible/createfile.yaml
+   94  ansible-playbook createfile.yaml
+   95  sudo ansible-playbook createfile.yaml
+   96  ansible-playbook createfile.yaml
+   97  gedit createfile.yaml
+   98  cd /etc/ansible
+   99  cd ~
+  100  mv createfile.yaml /etc/ansible
+  101  chmod 777 createfile.yaml
+  102  mv createfile.yaml /etc/ansible
+  103  cd /etc/ansible
+  104  gedit createfile.yaml
+  105  cd ~
+  106  gedit createfile.yaml
+  107  ansible-playbook createfile.yaml
+  108  ansible all -m copy -a 'src=/etc/ansible/hosts dest=/home/rivu/repos'
+  109  gedit createfile.yaml
+  110  ansible-playbook createfile.yaml
+  111  gedit createfile.yaml
+  112  sudo gedit /etc/ansible/playbook.yaml
+  113  ansible-playbook /etc/ansible/playbook.yaml
+  114  history
+  115  history>AnsibePlaybookCommands.txt
