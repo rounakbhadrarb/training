@@ -22,6 +22,7 @@ root@ip-172-31-4-104:/etc/docker# history
  
 
    23  sudo kubeadm init
+   sudo kubeadm init --pod-network-cidr=10.244.0.0/16
    24  systemctl status kubelet
    25  apt-get update
    26  sudo kubeadm init
@@ -65,3 +66,9 @@ root@ip-172-31-4-104:/etc/docker# history
 ------------
 for running the pods
 kubectl apply -f https://docs.projectcalico.org/v3.20/manifests/calico.yaml
+
+
+
+
+kubeadm join 192.168.249.249:6443 --token zpflv9.8u1ba7t3zevr99mz \
+	--discovery-token-ca-cert-hash sha256:ffdd640d238dfc4f34c49abe0f52d58d318fb458ca5ae7d4658a6395393d2534 
