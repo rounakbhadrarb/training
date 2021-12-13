@@ -1,0 +1,47 @@
+sudo apt-get update
+
+sudo add-apt-repository ppa:webupd8team/java
+
+sudo apt install oracle-java8-installer
+
+wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+
+sudo apt-add-repository "deb https://pkg.jenkins.io/debian-stable binary/"
+
+sudo apt-get update
+
+sudo apt install jenkin
+
+[
+root@ip-172-31-32-92:/home/ubuntu# systemctl status jenkins
+
+● jenkins.service - LSB: Start Jenkins at boot time
+
+     Loaded: loaded (/etc/init.d/jenkins; generated)
+
+     Active: active (exited) since Mon 2021-12-13 04:14:21 UTC; 1min 0s ago
+
+       Docs: man:systemd-sysv-generator(8)
+
+    Process: 5569 ExecStart=/etc/init.d/jenkins start (code=exited, status=0/SUCCESS) Dec 13 04:14:20 ip-172-31-32-92 systemd[1]: Starting LSB: Start Jenkins at boot time...
+
+Dec 13 04:14:20 ip-172-31-32-92 jenkins[5569]: Correct java version found
+
+Dec 13 04:14:20 ip-172-31-32-92 jenkins[5569]:  * Starting Jenkins Automation Server jenkins
+
+Dec 13 04:14:20 ip-172-31-32-92 su[5603]: (to jenkins) root on none
+
+Dec 13 04:14:20 ip-172-31-32-92 su[5603]: pam_unix(su-l:session): session opened for user jenkins by (uid=0)
+
+Dec 13 04:14:20 ip-172-31-32-92 su[5603]: pam_unix(su-l:session): session closed for user jenkins
+
+Dec 13 04:14:21 ip-172-31-32-92 jenkins[5569]:    ...done.
+
+Dec 13 04:14:21 ip-172-31-32-92 systemd[1]: Started LSB: Start Jenkins at boot time.
+
+root@ip-172-31-32-92:/home/ubuntu#
+
+root@ip-172-31-32-92:/home/ubuntu#
+
+apt install openjdk-11-jre-headless
+
