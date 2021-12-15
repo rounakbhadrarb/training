@@ -1,0 +1,171 @@
+
+apt update
+
+
+apt install openjdk-8-jdk
+
+java -version
+
+
+useradd -M -d /opt/nexus -s /bin/bash -r nexus
+
+echo "nexus   ALL=(ALL)       NOPASSWD: ALL" > /etc/sudoers.d/nexus
+
+
+wget https://sonatype-download.global.ssl.fastly.net/repository/downloads-prod-group/3/nexus-3.29.2-02-unix.tar.gz
+
+
+mkdir /opt/nexus
+
+tar xzf nexus-3.29.2-02-unix.tar.gz -C /opt/nexus --strip-components=1
+
+ls /opt/nexus
+
+
+chown -R nexus: /opt/nexus
+
+
+vim /opt/nexus/bin/nexus.vmoptions
+Replace the default values for the lines;
+
+-Xms2703m
+-Xmx2703m
+-XX:MaxDirectMemorySize=2703m
+...
+To for example, to set it to 1024MB;
+
+-Xms1024m
+-Xmx1024m
+-XX:MaxDirectMemorySize=1024m
+Save and exit the file once you have made the changes.
+
+
+
+Therefore, edit the file /opt/nexus/bin/nexus.rc and uncomment the line, #run_as_user="" and add nexus as the value.
+
+sed -i 's/#run_as_user=""/run_as_user="nexus"/' /opt/nexus/bin/nexus.rc
+
+Change the location of the Sonatype Work directory (Nexus data directory) to a location where nexus user has permissions to write.
+
+For example, in our setup, we set the home directory for Nexus as /opt/nexus and we gave nexus user ownership of this directory.
+
+By default, sonatype-work data directory is moved one directory up, hence, it is expected to be created under /opt, which the nexus user has no permissions to write.
+
+Therefore, edit the /opt/nexus/bin/nexus.vmoptions and adjust the path of the Nexus directory (in the below settings, the directory is changed from ../sonatype-work to ./sonatype-work).
+
+vim /opt/nexus/bin/nexus.vmoptions
+-XX:LogFile=./sonatype-work/nexus3/log/jvm.log
+-XX:-OmitStackTraceInFastThrow
+-Djava.net.preferIPv4Stack=true
+-Dkaraf.home=.
+-Dkaraf.base=.
+-Dkaraf.etc=etc/karaf
+-Djava.util.logging.config.file=etc/karaf/java.util.logging.properties
+-Dkaraf.data=./sonatype-work/nexus3
+-Dkaraf.log=./sonatype-work/nexus3/log
+-Djava.io.tmpdir=./sonatype-work/nexus3/tmp
+...
+Next, you can then run Nexus;
+
+sudo -u nexus /opt/nexus/bin/nexus start
+
+It might take sometime for Nexus to start. While starting, tail the logs;
+
+tail -f /opt/nexus/sonatype-work/nexus3/log/nexus.log
+
+2021-02-15 17:10:56,914+0000 INFO  [jetty-main-1]  *SYSTEM org.sonatype.nexus.siesta.SiestaServlet - Initialized
+2021-02-15 17:10:56,920+0000 INFO  [jetty-main-1]  *SYSTEM org.sonatype.nexus.repository.httpbridge.internal.ViewServlet - Initialized
+2021-02-15 17:10:56,962+0000 INFO  [jetty-main-1]  *SYSTEM org.eclipse.jetty.server.handler.ContextHandler - Started o.e.j.w.WebAppContext@3b390334{Sonatype Nexus,/,file:///opt/nexus/public/,AVAILABLE}
+2021-02-15 17:10:57,082+0000 INFO  [jetty-main-1]  *SYSTEM org.eclipse.jetty.server.AbstractConnector - Started ServerConnector@75763136{HTTP/1.1, (http/1.1)}{0.0.0.0:8081}
+2021-02-15 17:10:57,083+0000 INFO  [jetty-main-1]  *SYSTEM org.eclipse.jetty.server.Server - Started @182105ms
+2021-02-15 17:10:57,083+0000 INFO  [jetty-main-1]  *SYSTEM org.sonatype.nexus.bootstrap.jetty.JettyServer - 
+-------------------------------------------------
+
+Started Sonatype Nexus OSS 3.29.2-02
+
+-------------------------------------------------
+Nexus listens on TCP port 8081 by default;
+
+netstat -altnp | grep :8081
+tcp        0      0 0.0.0.0:8081            0.0.0.0:*               LISTEN      2113/java
+You should now be able to access Nexus web interface from browser.
+
+Create Nexus Repository Systemd Service
+In order to easily manage Nexus repository service, create a systemd service unit for it as shown below;
+
+cat > /etc/systemd/system/nexus.service << 'EOL'
+[Unit]
+Description=nexus service
+After=network.target
+
+[Service]
+Type=forking
+LimitNOFILE=65536
+ExecStart=/opt/nexus/bin/nexus start
+ExecStop=/opt/nexus/bin/nexus stop
+User=nexus
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+EOL
+Next, stop Nexus if you already started it with startup script above.
+
+/opt/nexus/bin/nexus stop
+
+Reload the systemd manager configuration;
+
+systemctl daemon-reload
+
+Start and enable Nexus service to run on system reboot;
+
+systemctl enable --now nexus.service
+
+Check the service status;
+
+systemctl status nexus
+● nexus.service - nexus service
+     Loaded: loaded (/etc/systemd/system/nexus.service; enabled; vendor preset: enabled)
+     Active: active (running) since Mon 2021-02-15 17:14:49 UTC; 5s ago
+    Process: 67085 ExecStart=/opt/nexus/bin/nexus start (code=exited, status=0/SUCCESS)
+   Main PID: 67277 (java)
+      Tasks: 41 (limit: 4620)
+     Memory: 442.9M
+     CGroup: /system.slice/nexus.service
+             └─67277 /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java -server -Dinstall4j.jvmDir=/usr/lib/jvm/java-8-openjdk-amd64/jre -Dexe4j.moduleName=/opt/nexus/bin/nexu>
+
+Feb 15 17:14:48 ubuntu20 systemd[1]: Starting nexus service...
+Feb 15 17:14:49 ubuntu20 nexus[67085]: Starting nexus
+Feb 15 17:14:49 ubuntu20 systemd[1]: Started nexus service.
+You can as well check the logs for verification;
+
+tail -f /opt/nexus/sonatype-work/nexus3/log/nexus.log
+
+Accessing Nexus Repository Web Interface
+You can now access Nexus repository from browser using 
+
+the address http://server-IP-or-resolvable-hostname:8081.
+
+If UFW is running, you need to open port 8081 to allow external access.
+
+ufw allow 8081/tcp
+
+Next, you can access from browser. Such an interface should welcome you.
+
+Install Nexus Repository Manager on Ubuntu 20.04
+Setup Nexus Repository Manager
+Click the sign in button at the top right corner. Login as admin. The password is located on the file, /opt/nexus/sonatype-work/nexus3/admin.password. To get the password, just print the contents of the file.
+
+cat /opt/nexus/sonatype-work/nexus3/admin.password
+Install Nexus Repository Manager on Ubuntu 20.04
+Once you logged in, click next to proceed to setup Nexus.
+
+Reset Nexus repository admin password
+Configure anonymous access. You can choose to disable the anonymous access to secure Nexus repositories by requiring user to authenticate before they can browse through the repositories.
+Finish the setup
+You can access Nexus repository manager settings by clicking on the gear icon;
+
+Install Nexus Repository Manager on Ubuntu 20.04
+You can go through the settings and make adjustments to suite your needs.
+
+That marks the end of our tutorial on how to install Nexus repository manager on Ubuntu 20.04.
