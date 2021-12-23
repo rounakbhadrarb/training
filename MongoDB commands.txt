@@ -1,0 +1,391 @@
+1. show databases
+2. use rounak
+3. db.createCollection('Rounak')
+
+
+4. Insert : 
+Syntax:     
+     db.collection_name.insert({​​​​​document}​​​​​)
+
+     For insertOne():
+     db.collection_name.insertOne( { <document> } )
+
+     For insertMany():
+     db.collection_name.insertMany( [ { <document1> }, { <document2> } ] )
+
+Example:
+db.user_profiles.insert ( [
+    {
+        Userid:"amy01",
+        Name:"Amy James",
+        Gender:"Female",
+        Location:"India",
+        Age:19,
+        University:"Delhi University"
+    },
+    {
+        Userid:"jimmy999",
+        Name:"Jim Watson",
+        From:"Canada",
+        Location:"Mexico",
+        Office: "Google"
+    },
+    {
+        Userid:"rachel_11",
+        Name:"Rachel Greene",
+        Location:"New Work",
+        PhoneNo:123456789,
+        University:"Vassar University",
+        Graduated:2014
+}
+] )
+
+5. Find: 
+
+Syntax:
+     db.collection_name.find( {query}, {projection} )
+Example:
+     db.user_profiles.find().pretty();
+
+Syntax:
+     db.collection_name.find( {​​​​​query}​​​​​, {​​​​​projection}​​​​​ )
+Example:
+     db.product_catalog.find( {​​​​​ publisher: "Dreamtech" }​​​​​ )
+
+db.product_catalog.find()
+
+db.product_catalog.find({​​​​}​​​​)
+
+db.product_catalog.find({​​​​}​​​​,{​​​​}​​​​)
+
+db.product_catalog.find({​​​​}​​​​,{​​​​_id:0}​​​​)
+
+Example:
+
+db.product_catalog.find(
+
+    {​​​​​ "categories.main":"electronics" }​​​​​
+
+)
+
+Example:
+
+db.product_catalog.find(
+
+    {​​​​​ colors: "black" }​​​​​,
+
+    {​​​​​ prodname: 1 }​​​​​
+)
+
+and Syntax:
+
+     db.collection_name.find(
+
+       {​​​​​ $and: [
+
+       {​​​​​ attribute1 : "value1" }​​​​​,
+
+       {​​​​​ attribute2 : "value2" }​​​​​
+
+     ]}​​​​​)
+
+or Syntax:
+    
+    db.collection_name.find(
+
+       {​​​​​ $or: [
+
+       {​​​​​ attribute1 : "value1" }​​​​​,
+
+       {​​​​​ attribute2 : "value2" }​​​​​
+
+     ]}​​​​​)
+
+Syntax:
+     db.collection_name.find(
+          { attribute1 : {$ne: "value1" } } )
+
+Syntax:
+
+     {​​​​​ field_name: {​​​​​ $all: [ "value1", "value2" ] }​​​​​
+
+db.product_catalog.find(
+    { colors : { $all : ["black", "silver"] } },
+    { _id: 0, prodname: 1 }
+)
+
+db.product_catalog.find({"categories.main":{$ne:"electronics"}},{prodname:1,_id:0})
+
+Question:
+=========
+
+The requirement states that Zoiva wants to retrieve Apple’s electronic products from their catalog to create a report on the inventory and sales.
+They also want to check if phones with black and silver colors with release years as 2017-2018 (both inclusive) and having price above 55000 rupees are available or not, as these phones are in maximum demand.
+
+Ans:
+====
+db.product_catalog.find({$and:[{manufacturer:"apple"},{colors:{$all:["black","silver"]}},{year_of_launch:{$in:[2017,2018]}},{price:{$gt:55000}}]});
+
+6. Update Syntax:
+     db.collection_name.update(
+       { attribute1 : "value1" },
+       { $set : { attribute : "newValue" } } )
+
+   UpdateMany syntax:
+     db.product_catalog.updateMany(
+     { attribute1 : "value1" },
+     { $set : { attribute : "newValue" } }
+      )
+    Increment Syntax:
+     db.collection_name.update( { $inc: { numericField:      <number> } } )
+
+
+rename
+db.product_catalog.update({ ISBN : 18407806},{ $rename: { price: "Rate"}})
+
+push
+(If the field does not exist, the $push operator creates the field and sets the value as an array with the element specified)
+Syntax:
+     db.collection_name.update( { $push: { arrayField: "newValue" } } )
+db.product_catalog.update({prodid:7000001}, { $push: { "colors": "blue" } } )
+
+ { prodid: 7000001  },
+   { $push: { colors: { $each: [ 'midnight blue', 'red' ] } } }
+)
+db.product_catalog.update({ISBN: 18407806}, { $inc: { price: -50 } } )
+
+
+ques1
+Consider the collection given below:
+
+{
+    prodid:200025, prodname:"MacBook Air", manufacturer:"apple", price:56000
+},
+{
+    prodid:200026, prodname:"MacBook Pro", manufacturer:"apple", price:90000
+}
+What would be the output of the below query?
+
+db.electronics.update(
+	{ prodid: 200026},
+	{ $push: { colors: "white" } }
+)
+No output, since field does not exist
+Error, since field does not exist
+Updates prodid 200026, adds color:"white" as a field
+Updates prodid 200026, adds color:["white"] as a field
+ans:d
+
+ques2
+Consider the following collection:
+
+{ _id: 1, item: "oven", price: 14000, quantity: 5 }
+{ _id: 2, item: "LCD", price: 48000, quantity: 10 }
+{ _id: 3, item: "refrigerator", price: 25000, quantity: 4 }
+What would be the output of the below query?
+
+db.electronics.update( 
+{item : "LCD" },     
+{ $inc : { quantity: -2} } 
+)
+ 
+
+Causes an error
+Updates the 'LCD' document, sets quantity to 8
+Updates the 'LCD' document, sets quantity to 12
+Adds a new quantity field to the 'LCD' document
+ans:b
+
+ques3
+Given the following documents in the electronics collection:
+
+{ _id: 1, item: "oven", price: 14000, quantity: 5 }
+{ _id: 2, item: "LCD", price: 48000, quantity: 10 }
+{ _id: 3, item: "refrigerator", price: 25000, quantity: 4 }
+{ _id: 4, item: "LCD", price: 56000, quantity: 3 }
+{ _id: 5, item: "LCD", price: 20000, quantity: 9 }
+What is the result of the below operation?
+
+db.electronics.update( 
+{item : "LCD", quantity : { $gte : 5 } },     
+{ $set : { HD : "full HD" }, $inc : { price : 8000 } } 
+)
+ 
+
+Updates all matching documents
+Updates only the first matching document
+Updates all matching documents, but ignores the 'HD' key
+Error, since no 'HD' key is found in any document
+
+ans:b
+
+
+db.product_catalog.update(
+   { prodid: 7000001  },
+   { $push: { colors: { $each: [ 'midnight blue', 'red' ] } } ,  $set: {prodname: "moto1"} }
+)
+
+ Delete Syntax:
+     db.collection_name.deleteOne( { <<remove criteria>> } )
+
+ Example:   db.product_catalog.deleteMany({​​​​​ price: {​​​​​ $lt : 1000 }​​​​​ }​​​​​ )
+
+        Syntax:
+            db.collection_name.deleteMany( {​​​​​}​​​​​ )
+        Example: db.product_catalog.deleteMany( {​​​​​ prodname: "Java for Dummies"}​​​​​ )
+
+
+example to perform aggregate function:
+=======================================
+
+
+db.product_catalog.insert([
+{ "manufacturer" : "apple", "price" : 20000, "display" : '4.7 inch Retina HD', "model" : 'iPhone 6S' , "categories": {'main':'electronics', 'sub': 'smartphones'}},
+{ "manufacturer" : "samsung", "price" : 15000, "android" : 'Oreo', "model" : 'Note 4' , "categories": {'main':'electronics', 'sub': 'smartphones'}},
+{ "manufacturer" : "samsung", "price" : 5450, "processor" : 'Exynos 8895 Octa Core', "model" : 'Galaxy S8' , "categories": {'main':'electronics', 'sub': 'smartphones'}},
+{ "manufacturer" : "apple", "price" : 50000, "display" : '5.5 inch Retina HD', "model" : 'iPhone 6 plus' , "categories": {'main':'electronics', 'sub': 'smartphones'}},
+{ "manufacturer" : "samsung", "price" : 10570, "processor" : 'Exynos 8890', "model" : 'Galaxy S7 Edge' , "categories": {'main':'electronics', 'sub': 'smartphones'}},
+{ "manufacturer" : "lenovo", "price" : 10000, "android" : 'Oreo', "model" : 'K8 Plus' , "categories": {'main':'electronics', 'sub': 'smartphones'}},
+{ "manufacturer" : "lenovo", "price" : 9920, "battery" : 4000, "model" : 'K6 Note' , "categories": {'main':'electronics', 'sub': 'smartphones'}},
+{ "manufacturer" : "lenovo", "price" : 10000, "material" : 'metal unibody', "model" : 'Vibe K5 Note' , "categories": {'main':'electronics', 'sub': 'smartphones'}},
+{ "manufacturer" : "apple", "price" : 19999, "camera" : '12 MP', "model" : 'iPhone SE', "categories": {'main':'electronics', 'sub': 'smartphones'} },
+{ "manufacturer" : "mi", "price" : 20000, "android" : 'Oreo', "model" : 'Max 2' , "categories": {'main':'electronics', 'sub': 'smartphones'}},
+{ "manufacturer" : "mi", "price" : 33000, "camera" : '12 MP', "model" : 'Mix 2' , "categories": {'main':'electronics', 'sub': 'smartphones'}},
+{ "manufacturer" : "mi", "price" : 15000, "memory" : '64 GB', "model" : 'A1' , "categories": {'main':'electronics', 'sub': 'smartphones'}},
+{ "manufacturer" : "mi", "price" : 15000, "display" : '5 inch HD', "model" : '4i' , "categories": {'main':'electronics', 'sub': 'smartphones'}},
+{ "manufacturer" : "moto", "price" : 10000, "android" : 'Nougat', "model" : 'E4 Plus' , "categories": {'main':'electronics', 'sub': 'smartphones'}},
+{ "manufacturer" : "moto", "price" : 7000, "ram" : '2 GB', "model" : 'C Plus' , "categories": {'main':'electronics', 'sub': 'smartphones'}},
+{ "manufacturer" : "samsung", "price" : 14000, "ram" : '4 GB', "model" : 'Galaxy On Max', "categories": {'main':'electronics', 'sub': 'smartphones'} },
+{ "manufacturer" : "honor", "price" : 18000, "battery" : 3340, "model" : '9i' , "categories": {'main':'electronics', 'sub': 'smartphones'}},
+{ "manufacturer" : "google", "price" : 45000, "android" : 'Oreo', "model" : 'Pixel 2', "categories": {'main':'electronics', 'sub': 'smartphones'} }
+])
+
+
+Aggregation function:
+======================
+ 
+1. Count:
+    db.product_catalog.count( { "categories.sub": "smartphones" })
+
+2. Distinct:
+   db.product_catalog.distinct( "manufacturer" )
+
+3. Syntax:
+     db.collection_name.aggregate(
+    { $match: { key1 : "value1"} } )
+Example:
+db.product_catalog.aggregate( [
+    { $project: { _id: 0, manufacturer: 1, price: 1 } },
+    { $group: { _id: "$manufacturer", totalPrice: { $sum: "$price" } } }
+] )
+
+4.Syntax:
+     db.collection_name.aggregate(
+    { $match: {$and: [{ key1 : "value1"}, {key2 : "value2" } ] } } )
+
+Example:
+
+db.product_catalog.aggregate(
+
+    {​​​​​ $match: {​​​​​$and: [{​​​​​ manufacturer: "lenovo" }​​​​​, {​​​​​price : {​​​​​$lt:10000}​​​​​ }​​​​​ ] }​​​​​ }​​​​​ )
+
+Example:
+
+db.product_catalog.aggregate( [
+
+    {​​​​​ $sort : {​​​​​ price: 1 }​​​​​ }​​​​​,
+
+    {​​​​​ $limit: 5}​​​​​,
+
+    {​​​​​ $out: "FiveCheapestMobiles"}​​​​​
+
+] )
+
+
+
+5. Syntax:
+     For ascending indexes:
+     db.collection_name.createIndex( { field_name : 1 } )
+
+     For descending indexes:
+     db.collection_name.createIndex( { field_name : -1 } )
+Example:
+
+db.product_catalog.find(
+
+    {​​​​​ price: {​​​​​ $gte: 5000, $lte: 20000 }​​​​​ }​​​​​
+
+).explain("executionStats")
+
+
+Example:
+
+db.product_catalog.createIndex(
+
+        {​​​​​ price:-1 }​​​​​)
+
+6.  
+Syntax:
+
+     db.collection_name.createIndex( {​​​​​field1 : 1, field2: -1}​​​​​ )
+
+Example:
+
+db.product_catalog.createIndex(
+
+        {​​​​​ price:1, rating:-1 }​​​​​)
+
+7. 
+Syntax:
+
+     db.collection_name.getIndexes()
+
+Syntax:
+
+     If you know the name of the index
+
+     db.collection_name.dropIndex( "index_name" )
+
+OR
+
+     For ascending indexes:
+
+     db.collection_name.drop_Index( {​​​​​ field_name : 1 }​​​​​ )
+
+OR
+
+     For descending indexes:
+
+     db.collection_name.drop_Index( {​​​​​ field_name : -1 }​​​​​ )  
+
+
+8. 
+Syntax:
+
+     db.collection_name.dropIndexes()
+
+for (var i = 1; i <= 50; i++) {​​​​​
+
+   db.js_tryout.insert( {​​​​​ _id : i }​​​​​ )
+
+}​​​​​
+
+var data = db.js_tryout.find({​​​​​_id: {​​​​​$gte: 5, $lte:15}​​​​​}​​​​​).toArray()
+
+for (var i=0; i < data.length; i++){​​​​​
+
+print("The ID is "+ data[i]._id)
+
+}​​​​​
+
+
+
+
+
+
+
+
+
+
+
+
